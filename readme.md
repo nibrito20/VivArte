@@ -25,4 +25,4 @@ O _**VivArte**_ é um site de vendas de livros e obras artísticas, no qual os u
 Criamos um protótipo de baixa fidelidade no Figma para representar a estrutura inicial do site VivArte.
 
 - 👉 [Acesse o protótipo no Figma](https://www.figma.com/design/1wkZo2pTqCO0kfTdtsA6OL/VivArte?node-id=0-1&p=f&m=draw)
-- 🎬 [Veja o vídeo explicativo do protótipo](https://youtu.be/6H9pklN93Cc)
+- 🎬 [Veja o vídeo explicativo do protótipo](https://youtu.be/oX5jcyQ2it0?feature=shared)
