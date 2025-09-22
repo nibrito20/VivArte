@@ -1,3 +1,4 @@
 from django.shortcuts import render
 
-# Create your views here.
+def booklist(request):
+    return render(request, 'library/booklist.html')
