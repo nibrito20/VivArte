@@ -1,4 +1,6 @@
 from django.db import models
+import datetime
+from django.utils import timezone
 
 # Create your models here.
 
@@ -8,7 +10,10 @@ class Book(models.Model):
     creationdate = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return "[" + str(self.id) + "]" + self.title 
+        return self.title 
     
     def detailedstr(self):
-        return "[" + str(self.id) + "]" + self.title + "data: " + self.creationdate + "detalhes: " + self.details
+        return self.title + "data: " + str(self.creationdate) + "detalhes: " + self.details
+    
+class Comment(models.Model):
+    pass
