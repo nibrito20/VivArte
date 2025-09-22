@@ -5,7 +5,17 @@
 {% endblock %}
 
 {% block content %}
+    <section>
     <h1>
         Book list
     </h1>
+
+    {% for book in books%}
+        <article class="book">
+            <h2>{{ book.title }} </h2>
+            <p>{{ book.creationdate }}</p>
+            <p>{{ book.details }}</p>
+        </article>
+    {% endfor %}
+    </section>
 {% endblock content %}
