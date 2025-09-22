@@ -9,6 +9,7 @@ class Book(models.Model):
     details = models.TextField()
     creationdate = models.DateTimeField(auto_now_add=True)
     slug = models.SlugField()
+    banner = models.ImageField(default='fallack.png', blank=True)
 
     def __str__(self):
         return self.title 
