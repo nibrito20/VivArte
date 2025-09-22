@@ -8,6 +8,7 @@ class Book(models.Model):
     title = models.CharField(max_length=100)
     details = models.TextField()
     creationdate = models.DateTimeField(auto_now_add=True)
+    slug = models.SlugField()
 
     def __str__(self):
         return self.title 
