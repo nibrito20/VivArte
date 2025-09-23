@@ -1,6 +1,8 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
-from django.contrib.auth import login
+from django.contrib.auth import login, logout
+
+#mudar todos os library:list para library:home, NAO EH PRA FAZER ISSO AINDA SO QUANDO A GNT ADICIONAR HOME NO LIBRARY
 
 def register_view(request):
 
@@ -26,4 +28,9 @@ def login_view(request):
     #ia ser legal um java script aqr pra dar um alert que a conta nao existe ou que a senha ta incorreta algo assim
     
     
+def logout_view(request):
+    
+    if request.method == "POST":
+        logout(request)
+        return redirect('library:list')
 
