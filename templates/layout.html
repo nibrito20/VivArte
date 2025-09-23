@@ -12,17 +12,22 @@
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
 <body>
-    <nav>
-        <a href="/">home</a> |
-        <a href="/about">about</a> |
-        <a href="{% url 'library:list' %}">library</a>
-    </nav>
+    <header>
+        <nav>
+            <a href="/" class="nav-link">Inicio</a>
+            <a href="{% url 'library:list' %}" class="nav-link">Biblioteca</a>
+            <a href="" class="nav-link">Lista de desejos</a>
+            <a href="/about" class="nav-link">about</a>
+            <a href="" class="perfil-icon nav-link"><i><img src="" alt=""></i>i</a>
+        </nav>
+    </header>
     <main>
         {% block content %}
         
         {% endblock %}
-
-        
     </main>
+    <footer>
+        <a href="" class="nav-link"> dps a gente ve o que coloca aq</a>
+    </footer>
 </body>
 </html>

@@ -4,49 +4,112 @@
     box-sizing: border-box;
 }
 
-body {
-    min-height: 100vh;
-    background-color: black;
-    color: whitesmoke;
-    font-size: 3rem;
+nav {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background-color: red;
+    height: 35px;
 }
 
-nav {
-    padding: 1rem;
-    background-color: #44B78B;
+.nav-link {
+    text-decoration: none;
     color: white;
-    font-size: 2.5rem;
+}
+
+.perfil-icon {
+    border-radius: 100%;
 }
 
 main {
-    padding: 1rem;
-}
-
-section {
     display: flex;
-    flex-flow: column;
-    gap: 1rem;
+    flex-direction: column;
+    gap: 100px;
+    padding-bottom: 100px;
 }
 
-h2 {
-    font-size: 2.5rem;
+.home-divs {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
 }
 
-p {
-    font-size: 1rem;
-}
-
-a {
-    text-decoration: none;
-    color: #81dbb8;
-}
-
-a:hover {
-    opacity: .85;
-}
-
-.banner {
-    display: block;
+.banner-home-img {
     width: 100%;
-    max-width: 800px;
+}
+
+.home-h2 {
+    font-size: 30px;
+}
+
+.search-bar-section {
+    background-color: rgb(230, 230, 230);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius:10px;
+    width: 70%;
+    height: 40px;
+}
+
+.search-bar {
+    background-color: transparent;
+    border-style: none;
+    outline: none;
+    width: 98%;
+}
+
+.basic-home-section {
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+}
+
+.card {
+    display: flex;
+    flex-direction: column;
+    width: 20%;
+    height: 400px;
+    border: 1px solid gray;
+    border-radius: 30px;
+}
+
+.card-img {
+    max-height: 300px;
+    width: auto;
+    object-fit: contain;
+}
+
+.card-description {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100px;
+    gap: 10px;
+    border-top: 1px solid gray;
+}
+
+.gender-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 200px;
+    height: 200px;
+    border-radius: 100%;
+    border: 1px solid gray;
+    background-color: rgb(255, 187, 198);
+}
+
+.gender-img {
+    width: 100px;
+}
+
+footer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 200px;
+    background-color: red;
 }
