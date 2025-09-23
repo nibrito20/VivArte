@@ -8,4 +8,4 @@ def booklist(request):
 
 def bookpage(request, slug):
     book = Book.objects.get(slug=slug)
-    return render(request, 'library/bookpage.html', { 'books': book})
+    return render(request, 'library/bookpage.html', { 'book': book})
