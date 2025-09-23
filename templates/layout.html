@@ -18,7 +18,8 @@
             <a href="{% url 'library:list' %}" class="nav-link">Biblioteca</a>
             <a href="" class="nav-link">Lista de desejos</a>
             <a href="/about" class="nav-link">about</a>
-            <a href="" class="perfil-icon nav-link"><i><img src="" alt=""></i>i</a>
+            <!--# colocar um if para que va para outra aba caso o usuario esteja logado-->
+            <a href="{% url 'users:register' %}" class="nav-link">Usuario</a>
         </nav>
     </header>
     <main>
