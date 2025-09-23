@@ -1,0 +1,18 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+
+    Wish list provisoria
+{% endblock %}
+
+{% block content %}
+    <section>
+        <img 
+        class="banner"
+        src="{{ book.banner.url}}"
+        alt="{{ post.title }}"/>
+    <h1>{{ book.title }} please</h1>
+    <p>{{ book.creationdate }} please</p>
+    <p>{{ book.details }}</p>
+    </section>
+{% endblock content %}

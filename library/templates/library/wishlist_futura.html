@@ -1,19 +1,19 @@
 {% extends "layout.html" %}
 
 {% block title %}
-    Book list
+    wish list
 {% endblock %}
 
 {% block content %}
     <section>
     <h1>
-        Book list
+        wish list
     </h1>
 
-    {% for book in books%}
+    {% for book in wished%}
         <article class="book">
             <h2>
-                <a href="{% url 'library:page' slug=book.slug %}">
+                <a href="{% url 'library:wish' slug=book.slug %}">
                     {{ book.title }} 
                 </a>
             </h2>
