@@ -21,6 +21,7 @@
             <!-- % if user.is_authenticated % ,entre chaves, isso eh pra verificar se ta logado-->
 
             {% if user.is_authenticated %}
+                <a href="{% url 'users:account' %}" class="nav-link">Conta</a>
                 <a href="{% url 'library:add' %}" class="nav-link">vender livro</a>
                 <form class="logout" action="{% url 'users:logout' %}" method="post"> {% csrf_token %} <button class="logout-button">Sair</button> </form>
                 <a href="" class="perfil-icon nav-link"><i><img src="" alt=""></i>icone</a>
