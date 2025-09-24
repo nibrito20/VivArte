@@ -2,19 +2,30 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    
 }
 
 nav {
     display: flex;
     justify-content: space-around;
     align-items: center;
-    background-color: red;
-    height: 35px;
+    background-color: #632024;
+    height: 60px;
 }
 
 .nav-link {
     text-decoration: none;
-    color: white;
+    color: #d5b893;
+    padding-left: 12px;
+    padding-right: 12px;
+    padding-bottom: 8px;
+    padding-top: 8px;
+    border-radius: 5px;
+    transition: all 0.4s ease;
+}
+
+.nav-link:hover {
+    background-color: #4b191c;
 }
 
 .perfil-icon {
@@ -26,6 +37,7 @@ main {
     flex-direction: column;
     gap: 100px;
     padding-bottom: 100px;
+    background-color: #25344f;
 }
 
 .home-divs {
@@ -41,10 +53,11 @@ main {
 
 .home-h2 {
     font-size: 30px;
+    color: #d5b893;
 }
 
 .search-bar-section {
-    background-color: rgb(230, 230, 230);
+    background-color: #d5b893;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -60,6 +73,10 @@ main {
     width: 98%;
 }
 
+input::placeholder{
+    color: #615443;
+}
+
 .basic-home-section {
     display: flex;
     justify-content: space-around;
@@ -71,14 +88,24 @@ main {
     flex-direction: column;
     width: 20%;
     height: 400px;
-    border: 1px solid gray;
+    border: 1px solid #6f4d38;
     border-radius: 30px;
+    background-color: #632024;
+    transition: all 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-10px);
+    cursor: pointer;
 }
 
 .card-img {
     max-height: 300px;
     width: auto;
     object-fit: contain;
+    background-color: #617891;
+    border-top-left-radius: 30px;
+    border-top-right-radius: 30px;
 }
 
 .card-description {
@@ -89,6 +116,7 @@ main {
     height: 100px;
     gap: 10px;
     border-top: 1px solid gray;
+    color: #d5b893;
 }
 
 .gender-section {
@@ -111,7 +139,7 @@ footer {
     justify-content: center;
     align-items: center;
     height: 200px;
-    background-color: red;
+    background-color: #632024;
 }
 
 

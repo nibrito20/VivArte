@@ -22,7 +22,7 @@
 
             {% if user.is_authenticated %}
                 <a href="{% url 'library:add' %}" class="nav-link">vender livro</a>
-                <form class="logout" action="{% url 'users:logout' %}" method="post"> {% csrf_token %} <a href="nav-link"> Sair</a> </form>
+                <form class="logout" action="{% url 'users:logout' %}" method="post"> {% csrf_token %} <a href="" class="nav-link"> Sair</a> </form>
                 <a href="" class="perfil-icon nav-link"><i><img src="" alt=""></i>icone</a>
             {% else %}
                 <a href="{% url 'users:register' %}" class="nav-link">Registrar</a>
