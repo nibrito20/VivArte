@@ -19,6 +19,7 @@
             </h2>
             <p>{{ book.creationdate }}</p>
             <p></p>
+            <a href="{% url 'library:add_to_wishlist' book_id=book.id %}">Adicionar à Lista de Desejos</a>
         </article>
     {% endfor %}
     </section>
