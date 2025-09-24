@@ -18,7 +18,11 @@ def addbook(request):
 @login_required
 def wishlist_view(request):
     wishlist_items = Wishlist.objects.filter(user=request.user).order_by('-added_at')
-    return render(request, 'wishlist.html', {'wishlist_items': wishlist_items})
+    wished_books = [item.book for item in wishlist_items]
+    context = {
+        'wished': wished_books
+    }
+    return render(request, 'wishlist.html', context)
 
 @login_required
 def add_to_wishlist(request, book_id):
@@ -29,6 +33,12 @@ def add_to_wishlist(request, book_id):
 
 @login_required
 def remove_from_wishlist(request, book_id):
-    book = get_object_or_404(Book, pk=book_id)
-    Wishlist.objects.filter(user=request.user, book=book).delete()
-    return redirect('wishlist')
+    if request.method == 'POST':
+        book = get_object_or_404(Book, id=book_id)
+        try:
+            wishlist_item = Wishlist.objects.get(user=request.user, book=book)
+            wishlist_item.delete()
+        except Wishlist.DoesNotExist:
+            pass  # O item não está na lista, não faz nada
+
+    return redirect('library:wishlist')

@@ -13,7 +13,7 @@
     {% for book in books%}
         <article class="book">
             <h2>
-                <a href="{% url 'library:page' slug=book.slug %}">
+                <a href="{% url 'library:detail' slug=book.slug %}">
                     {{ book.title }} 
                 </a>
             </h2>
