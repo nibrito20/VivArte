@@ -29,7 +29,7 @@ def add_to_wishlist(request, book_id):
     book = get_object_or_404(Book, pk=book_id)
     if not Wishlist.objects.filter(user=request.user, book=book).exists(): #vê se o livro tá na lista
         Wishlist.objects.create(user=request.user, book=book)
-    return redirect('library:wishlist')
+    return redirect('library:list')
 
 @login_required
 def remove_from_wishlist(request, book_id):
