@@ -16,7 +16,7 @@
         <nav>
             <a href="/" class="nav-link">Inicio</a>
             <a href="{% url 'library:list' %}" class="nav-link">Biblioteca</a>
-            <a href="" class="nav-link">Lista de desejos</a>
+            <a href="{% url 'library:wishlist' %}" class="nav-link">Lista de desejos</a>
             <a href="/about" class="nav-link">about</a>
             <!--# colocar um if para que va para outra aba caso o usuario esteja logado-->
             <!-- % if user.is_authenticated % ,entre chaves, isso eh pra verificar se ta logado-->
