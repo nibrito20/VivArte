@@ -4,7 +4,7 @@
 
 ## Sobre o Projeto
 
-O _**VivArte**_ é um site de vendas de livros e obras artísticas, no qual os usuários podem tanto expor suas criações, quanto adquirir desenhos de outros usuários. O projeto tem como principal intuito propagar a diversidade e a cultura através da arte.
+O _**VivArte**_ é um site de vendas de livros, no qual os usuários podem tanto vender suas criações, quanto adquirir livros de outros escritores. O projeto tem como principal intuito propagar a diversidade e a cultura através da arte.
 
 ---
 
