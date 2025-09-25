@@ -18,7 +18,7 @@ O _**VivArte**_ é um site de vendas de livros e obras artísticas, no qual os u
 
 #### Backlog
 
-![Captura de tela do backlog do projeto VivArte no Jira](img/backlog.png)
+![Captura de tela do backlog do projeto VivArte no Jira](img/backlog1.png)
 
 - 👉 [Clique aqui para acessar o docs com as histórias](https://docs.google.com/document/d/1RLXJphhes-Kdtzw0TnwXNYpnUd-U_wLkc0-pWla9O64/edit?tab=t.0)
 
