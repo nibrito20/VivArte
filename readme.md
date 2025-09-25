@@ -26,3 +26,23 @@ Criamos um protótipo de baixa fidelidade no Figma para representar a estrutura 
 
 - 👉 [Acesse o protótipo no Figma](https://www.figma.com/design/1wkZo2pTqCO0kfTdtsA6OL/VivArte?node-id=0-1&p=f&m=draw)
 - 🎬 [Veja o vídeo explicativo do protótipo](https://youtu.be/oX5jcyQ2it0?feature=shared)
+
+## Entrega 2
+
+### Histórias de Usuário 
+
+#### Quadro (sprint)
+
+![Captura de tela do quadro na entrega 2 no projeto VivArte no Jira](img/quadro2.png)
+
+#### Backlog
+
+![Captura de tela do backlog na entrega 2 no projeto VivArte no Jira](img/backlog2.png)
+
+- 👉 [Clique aqui para acessar o docs com as histórias](https://docs.google.com/document/d/1RLXJphhes-Kdtzw0TnwXNYpnUd-U_wLkc0-pWla9O64/edit?tab=t.0)
+
+#### Programação em Par experimentada
+
+Neste tópico, documentamos a nossa experiência com a prática de Programação em Par. Para entender os detalhes, desafios e aprendizados obtidos durante o processo.
+
+- 👉 [Clique aqui para acessar o relatório completo](https://docs.google.com/document/d/1M8ozVoiFYHHC7XLW48OckMtKpWRVdXbWguwumzyfgT8/edit?usp=sharing)
