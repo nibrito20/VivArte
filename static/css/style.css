@@ -1,12 +1,12 @@
-@import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..800;1,400..800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Merriweather:ital,opsz,wght@0,18..144,300..900;1,18..144,300..900&display=swap');
 
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: "EB Garamond", serif;
+    font-family: "Merriweather", serif;
     font-optical-sizing: auto;
-    font-weight: 600;
+    font-weight: 400;
 }
 
 nav {
@@ -15,7 +15,6 @@ nav {
     align-items: center;
     background-color: #8C0839;
     height: 60px;
-    border-bottom: 5px solid #ceb176;
 }
 
 .nav-link {
@@ -45,11 +44,30 @@ main {
     background-color: #F2F2F2;
 }
 
+.banner-div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+}
+
 .home-divs {
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 30px;
+    padding-top: 30px;
+    padding-bottom: 40px;
+}
+
+.home-divs-red {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+    padding-top: 30px;
+    padding-bottom: 40px;
+    background-color: #8C0839;
 }
 
 .banner-home-img {
@@ -63,8 +81,13 @@ main {
     color: #202020;
 }
 
+.home-h2-red {
+    font-size: 30px;
+    color: #f2f2f2;
+}
+
 .search-bar-section {
-    background-color: #d6d6d6;
+    background-color: #f2f2f2;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -87,7 +110,7 @@ input {
 }
 
 input::placeholder{
-    color: #919191;
+    color: #8f8f8f;
 }
 
 .basic-home-section {
@@ -104,6 +127,7 @@ input::placeholder{
     border: 1px solid #d6d6d6;
     border-radius: 30px;
     background-color: #8C0839;
+    box-shadow: rgba(0, 0, 0, 0.20) 0px 5px 15px;
     transition: all 0.3s ease;
 }
 
@@ -139,7 +163,14 @@ input::placeholder{
     width: 200px;
     height: 200px;
     border-radius: 100%;
-    background-color: #8C0839;
+    background-color: #f2f2f2;
+    box-shadow: rgba(0, 0, 0, 0.20) 0px 5px 15px;
+    transition: all 0.3s ease;
+}
+
+.gender-section:hover {
+    transform: translateY(-10px);
+    cursor: pointer;
 }
 
 .gender-img {
@@ -152,7 +183,6 @@ footer {
     align-items: center;
     height: 200px;
     background-color: #8C0839;
-    border-top: 5px solid #ceb176;
 }
 
 
@@ -164,8 +194,8 @@ footer {
 
 .logout-button {
     text-decoration: none;
-    background-color: #632024;
-    color: #ceb176;
+    background-color: #8C0839;
+    color: #f2f2f2;
     padding-left: 12px;
     padding-right: 12px;
     padding-bottom: 8px;
@@ -176,7 +206,7 @@ footer {
 }
 
 .logout-button:hover {
-    background-color: #8C0839;
+    background-color: #610728;
     cursor: pointer;
 }
 
