@@ -14,21 +14,28 @@
 <body>
     <header>
         <nav>
-            <a href="/" class="nav-link">Inicio</a>
-            <a href="{% url 'library:list' %}" class="nav-link">Biblioteca</a>
-            <a href="{% url 'library:wishlist' %}" class="nav-link">Lista de desejos</a>
-            <!--# colocar um if para que va para outra aba caso o usuario esteja logado-->
-            <!-- % if user.is_authenticated % ,entre chaves, isso eh pra verificar se ta logado-->
-
-            {% if user.is_authenticated %}
-                <a href="{% url 'users:account' %}" class="nav-link">Conta</a>
-                <a href="{% url 'library:add' %}" class="nav-link">vender livro</a>
-                <form class="logout" action="{% url 'users:logout' %}" method="post"> {% csrf_token %} <button class="logout-button">Sair</button> </form>
-                <a href="" class="perfil-icon nav-link"><i><img src="" alt=""></i>icone</a>
-            {% else %}
-                <a href="{% url 'users:register' %}" class="nav-link">Registrar</a>
-                <a href="{% url 'users:login' %}" class="nav-link">Entrar</a>
-            {% endif %}
+            <ul class="nav-list">
+                <li><a href="/" class="nav-link">Inicio</a></li>
+                <li><a href="{% url 'library:list' %}" class="nav-link">Biblioteca</a></li>
+                {% if user.is_authenticated %}
+                    <li><a href="{% url 'library:wishlist' %}" class="nav-link">Lista de desejos</a></li>
+                {% else %}
+                    <li><a href="{% url 'users:login' %}" class="nav-link">Lista de desejos</a></li>
+                {% endif %}
+            </ul>
+            <div>
+                <a href="/"><img src="/media/logo-vivarte.png" alt="" class="nav-logo"></a>
+            </div>
+            <ul class="nav-list">
+                {% if user.is_authenticated %}
+                    <li><a href="" class="nav-link">Vender</a></li>
+                    <li><form action="{% url 'users:logout' %}" method="post" class="nav-form"> {% csrf_token %} <button class="nav-button" >Sair</button></form></li>
+                    <li><a href="{% url 'users:account' %}" class="nav-link"><i>icone</i></a></li>
+                {% else %}
+                    <li><a href="{% url 'users:register' %}" class="nav-link">Registrar</a></li>
+                    <li><a href="{% url 'users:login' %}" class="nav-link">Entrar</a></li>
+                {% endif %}
+            </ul>
         </nav>
     </header>
     <main>
