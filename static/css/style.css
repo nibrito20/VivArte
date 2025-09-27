@@ -13,7 +13,7 @@ nav {
     display: flex;
     justify-content: space-around;
     align-items: center;
-    background-color: #8C0839;
+    background-color: #83072b;
     height: 60px;
 }
 
@@ -29,7 +29,7 @@ nav {
 }
 
 .nav-link:hover {
-    background-color: #6f072d;
+    background-color: #670621;
 }
 
 .perfil-icon {
@@ -67,7 +67,7 @@ main {
     gap: 30px;
     padding-top: 30px;
     padding-bottom: 40px;
-    background-color: #8C0839;
+    background-color: #83072b;
 }
 
 .banner-home-img {
@@ -126,7 +126,7 @@ input::placeholder{
     height: 400px;
     border: 1px solid #d6d6d6;
     border-radius: 30px;
-    background-color: #8C0839;
+    background-color: #83072b;
     box-shadow: rgba(0, 0, 0, 0.20) 0px 5px 15px;
     transition: all 0.3s ease;
 }
@@ -182,7 +182,7 @@ footer {
     justify-content: center;
     align-items: center;
     height: 200px;
-    background-color: #8C0839;
+    background-color: #83072b;
 }
 
 
@@ -194,7 +194,7 @@ footer {
 
 .logout-button {
     text-decoration: none;
-    background-color: #8C0839;
+    background-color: #83072b;
     color: #f2f2f2;
     padding-left: 12px;
     padding-right: 12px;
