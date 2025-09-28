@@ -1,14 +1,33 @@
 {% extends 'layout.html' %}
 
 {% block title %}
-    Register a New User
+    Registrar Novo Usuário
 {% endblock %}
 
 {% block content %}
-    <h1>Register a New User</h1>
-    <form class="form-with-validation" action="/users/register/" method="post">
+<section style="max-width: 500px; margin: 40px auto; padding: 20px; border: 1px solid #ddd; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); background-color: #fff;">
+    <h1 style="text-align:center; color:#800020; margin-bottom: 20px;">📝 Registrar Novo Usuário</h1>
+
+    <form action="{% url 'users:register' %}" method="post" style="display: flex; flex-direction: column; gap: 15px;">
         {% csrf_token %}
-        {{ form }}
-        <button class="form-submit">Submit</button>
+
+        {% for field in form %}
+            <div style="display: flex; flex-direction: column;">
+                <label for="{{ field.id_for_label }}" style="font-weight: bold; margin-bottom: 5px;">{{ field.label }}</label>
+                {{ field }}
+                {% if field.errors %}
+                    <span style="color: red; font-size: 0.9em;">{{ field.errors|striptags }}</span>
+                {% endif %}
+            </div>
+        {% endfor %}
+
+        <button type="submit" style="padding: 10px; background-color: #800020; color: white; border: none; border-radius: 5px; cursor: pointer; font-weight: bold;">
+            Registrar
+        </button>
     </form>
+
+    <p style="text-align:center; margin-top:15px;">
+        Já tem uma conta? <a href="{% url 'users:login' %}" style="color:#800020; text-decoration:none; font-weight:bold;">Login aqui</a>
+    </p>
+</section>
 {% endblock %}
