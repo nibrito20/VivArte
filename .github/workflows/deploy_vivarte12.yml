@@ -36,10 +36,7 @@ jobs:
 
       - name: Cleaning testing files
         run: |
-          cd VivArte/
-          rm db.sqlite3
-          rm .env
-          cd ..
+            zip release.zip ./* -r
 
         
       # Optional: Add step to run tests here (PyTest, Django test suites, etc.)
@@ -77,6 +74,7 @@ jobs:
           slot-name: 'Production'
 
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_5AB1943845E1479D949E42008C437855 }}
+
 
 
 
