@@ -2,8 +2,8 @@
 # More GitHub Actions for Azure: https://github.com/Azure/actions
 # More info on Python, GitHub Actions, and Azure App Service: https://aka.ms/python-webapps-actions
 
-name: Build and deploy Python app to Azure Web App - vivarte12
-
+- name: Install dependencies
+      run: pip install -r SEUPROJETODJANGO/requirements.txt
 on:
   push:
     branches:
@@ -58,4 +58,5 @@ jobs:
         with:
           app-name: 'vivarte12'
           slot-name: 'Production'
+
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_5AB1943845E1479D949E42008C437855 }}
