@@ -49,12 +49,6 @@ jobs:
             .
             !venv/
 
-      - name: Zip artifact for deployment
-        run: |
-          cd VivArte/
-          zip release.zip ./* -r
-          cd ..
-          mv VivArte/release.zip .
 
   deploy:
     runs-on: ubuntu-latest
