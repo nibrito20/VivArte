@@ -40,12 +40,7 @@ jobs:
           rm db.sqlite3
           rm .env
           cd ..
-      - name: Zip artifact for deployment
-        run: |
-          cd VivArte/
-          zip release.zip ./* -r
-          cd ..
-          mv VivArte/release.zip .
+
         
       # Optional: Add step to run tests here (PyTest, Django test suites, etc.)
 
@@ -56,6 +51,13 @@ jobs:
           path: |
             .
             !venv/
+
+      - name: Zip artifact for deployment
+        run: |
+          cd VivArte/
+          zip release.zip ./* -r
+          cd ..
+          mv VivArte/release.zip .
 
   deploy:
     runs-on: ubuntu-latest
@@ -75,6 +77,7 @@ jobs:
           slot-name: 'Production'
 
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_5AB1943845E1479D949E42008C437855 }}
+
 
 
 
