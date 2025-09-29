@@ -31,7 +31,11 @@ if NOT_PROD:
     # SECURITY WARNING: don't run with debug turned on in production!
     DEBUG = True
 
-    ALLOWED_HOSTS = []
+    ALLOWED_HOSTS = [
+        'vivarte8-e3dfcxh4bgc5bndt.brazilsouth-01.azurewebsites.net',
+        'localhost',
+        '127.0.0.1'
+    ]
 
     DATABASES = {
     'default': {
