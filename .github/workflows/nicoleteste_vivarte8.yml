@@ -35,7 +35,7 @@ jobs:
       - name: Cleaning testing files
         run: |
           rm db.sqlite3
-          rm -f .env
+          rm .env
 
       - name: Zip artifact for deployment
         run: |
@@ -79,5 +79,6 @@ jobs:
           slot-name: 'Production'
 
           
+
 
 
