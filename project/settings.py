@@ -44,7 +44,7 @@ else:
     DEBUG = os.getenv('DEBUG', '0').lower() in ['true', 't', '1']
     ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS').split(' ')
     CSRF_TRUSTED_ORIGINS = [
-        'https://vivarte8-e3dfcxh4bgc5bndt.brazilsouth-01.azurewebsites.net',
+        'https://vivarte8-e3dfcxh4bgc5bndt.brazilsouth-01.azurewebsites.net'
     ]
     SECURE_SSL_REDIRECT = \
         os.getenv('SECURE_SSL_REDIRECT', '0').lower() in ['true', 't', '1']
