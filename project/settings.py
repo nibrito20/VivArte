@@ -23,6 +23,9 @@ load_dotenv(BASE_DIR / '.env')
 
 TARGET_ENV = os.getenv('TARGET_ENV')
 NOT_PROD = not TARGET_ENV.lower().startswith('prod')
+CSRF_TRUSTED_ORIGINS = [
+        "https://vivarte8-e3dfcxh4bgc5bndt.brazilsouth-01.azurewebsites.net",
+]
 
 if NOT_PROD:
     # SECURITY WARNING: keep the secret key used in production secret!
@@ -48,9 +51,6 @@ else:
     DEBUG = os.getenv('DEBUG', '0').lower() in ['true', 't', '1']
     ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', 'vivarte8-e3dfcxh4bgc5bndt.brazilsouth-01.azurewebsites.net').split(',')
 
-    CSRF_TRUSTED_ORIGINS = [
-        'https://vivarte8-e3dfcxh4bgc5bndt.brazilsouth-01.azurewebsites.net',
-    ]
     
     SECURE_SSL_REDIRECT = \
         os.getenv('SECURE_SSL_REDIRECT', '0').lower() in ['true', 't', '1']
