@@ -14,7 +14,7 @@ from pathlib import Path
 from dotenv import load_dotenv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(_file_).resolve().parent.parent
+BASE_DIR = Path(__file__).resolve().parent.parent
 
 load_dotenv(BASE_DIR / '.env')
 
@@ -24,7 +24,7 @@ load_dotenv(BASE_DIR / '.env')
 TARGET_ENV = os.getenv('TARGET_ENV')
 NOT_PROD = not TARGET_ENV.lower().startswith('prod')
 CSRF_TRUSTED_ORIGINS = [
-        "http://vivarte8-e3dfcxh4bgc5bndt.brazilsouth-01.azurewebsites.net",
+        "https://vivarte8-e3dfcxh4bgc5bndt.brazilsouth-01.azurewebsites.net",
 ]
 
 if NOT_PROD:
