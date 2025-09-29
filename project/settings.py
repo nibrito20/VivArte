@@ -24,7 +24,7 @@ load_dotenv(BASE_DIR / '.env')
 TARGET_ENV = os.getenv('TARGET_ENV')
 NOT_PROD = not TARGET_ENV.lower().startswith('prod')
 CSRF_TRUSTED_ORIGINS = [
-        "https://vivarte8-e3dfcxh4bgc5bndt.brazilsouth-01.azurewebsites.net",
+        "http://vivarte8-e3dfcxh4bgc5bndt.brazilsouth-01.azurewebsites.net",
 ]
 
 if NOT_PROD:
