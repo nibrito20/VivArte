@@ -50,9 +50,6 @@ else:
 
     CSRF_TRUSTED_ORIGINS = [
         'https://vivarte8-e3dfcxh4bgc5bndt.brazilsouth-01.azurewebsites.net',
-        'http://localhost',
-        'http://127.0.0.1',
-        
     ]
     
     SECURE_SSL_REDIRECT = \
