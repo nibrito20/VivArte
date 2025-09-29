@@ -46,7 +46,7 @@ if NOT_PROD:
 else:
     SECRET_KEY = os.getenv('SECRET_KEY')
     DEBUG = os.getenv('DEBUG', '0').lower() in ['true', 't', '1']
-    ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', 'vivarte8-e3dfcxh4bgc5bndt.brazilsouth-01.azurewebsites.net').split(' ')
+    ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', 'vivarte8-e3dfcxh4bgc5bndt.brazilsouth-01.azurewebsites.net').split(',')
 
     CSRF_TRUSTED_ORIGINS = [
         'https://vivarte8-e3dfcxh4bgc5bndt.brazilsouth-01.azurewebsites.net',
