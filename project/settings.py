@@ -43,8 +43,9 @@ else:
     SECRET_KEY = os.getenv('SECRET_KEY')
     DEBUG = os.getenv('DEBUG', '0').lower() in ['true', 't', '1']
     ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS').split(' ')
-    CSRF_TRUSTED_ORIGINS = 'https://' + os.getenv('CSRF_TRUSTED_ORIGINS')
-
+    CSRF_TRUSTED_ORIGINS = [
+        'https://' + host for host in os.getenv('CSRF_TRUSTED_ORIGINS', ' ').split()
+    ]
     SECURE_SSL_REDIRECT = \
         os.getenv('SECURE_SSL_REDIRECT', '0').lower() in ['true', 't', '1']
 
