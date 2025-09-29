@@ -49,7 +49,7 @@ else:
     ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', 'vivarte8-e3dfcxh4bgc5bndt.brazilsouth-01.azurewebsites.net').split(' ')
 
     CSRF_TRUSTED_ORIGINS = [
-        'vivarte8-e3dfcxh4bgc5bndt.brazilsouth-01.azurewebsites.net'
+        'https://vivarte8-e3dfcxh4bgc5bndt.brazilsouth-01.azurewebsites.net'
     ]
     
     SECURE_SSL_REDIRECT = \
