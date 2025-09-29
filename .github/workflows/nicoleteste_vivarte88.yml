@@ -31,6 +31,14 @@ jobs:
       
       - name: Install dependencies
         run: pip install -r requirements.txt
+
+      - name: Cleaning testing files
+        run: 
+          rm db.sqlite3
+          rm .env
+      - name: Zip artifacts for deployment
+        run:
+          zip release.zip ./* -r 
         
       # Optional: Add step to run tests here (PyTest, Django test suites, etc.)
 
@@ -58,4 +66,5 @@ jobs:
         with:
           app-name: 'VivArte88'
           slot-name: 'Production'
+
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_CA13B52F3FD6404BB6181926A699360A }}
