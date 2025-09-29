@@ -14,7 +14,7 @@ from pathlib import Path
 from dotenv import load_dotenv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR = Path(_file_).resolve().parent.parent
 
 load_dotenv(BASE_DIR / '.env')
 
@@ -34,22 +34,24 @@ if NOT_PROD:
     ALLOWED_HOSTS = [
         'vivarte8-e3dfcxh4bgc5bndt.brazilsouth-01.azurewebsites.net',
         'localhost',
-        '127.0.0.1'
+        '127.0.0.1',
     ]
 
     DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
     }
-}
 else:
     SECRET_KEY = os.getenv('SECRET_KEY')
     DEBUG = os.getenv('DEBUG', '0').lower() in ['true', 't', '1']
-    ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS').split(' ')
+    ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', 'vivarte8-e3dfcxh4bgc5bndt.brazilsouth-01.azurewebsites.net').split(' ')
+
     CSRF_TRUSTED_ORIGINS = [
         'vivarte8-e3dfcxh4bgc5bndt.brazilsouth-01.azurewebsites.net'
     ]
+    
     SECURE_SSL_REDIRECT = \
         os.getenv('SECURE_SSL_REDIRECT', '0').lower() in ['true', 't', '1']
 
@@ -63,6 +65,7 @@ else:
             'HOST': os.environ.get('DBHOST'),
             'USER': os.environ.get('DBUSER'),
             'PASSWORD': os.environ.get('DBPASS'),
+            'PORT': os.getenv('DBPORT', '5432'),
             'OPTIONS': {'sslmode': 'require'},
         }
     }
