@@ -2,12 +2,12 @@
 # More GitHub Actions for Azure: https://github.com/Azure/actions
 # More info on Python, GitHub Actions, and Azure App Service: https://aka.ms/python-webapps-actions
 
-name: Build and deploy Python app to Azure Web App - vivarte8
+name: Build and deploy Python app to Azure Web App - viv-arte
 
 on:
   push:
     branches:
-      - nicoleteste
+      - prod
   workflow_dispatch:
 
 jobs:
@@ -31,16 +31,10 @@ jobs:
       
       - name: Install dependencies
         run: pip install -r requirements.txt
-
+        
       - name: Cleaning testing files
         run: |
-          rm db.sqlite3
           rm .env
-
-      - name: Zip artifact for deployment
-        run: |
-          zip release.zip ./* -r
-        
       # Optional: Add step to run tests here (PyTest, Django test suites, etc.)
 
       - name: Upload artifact for deployment jobs
@@ -67,20 +61,14 @@ jobs:
       - name: Login to Azure
         uses: azure/login@v2
         with:
-          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_7A951AA234BB458FBE2B2CFCCF43B170 }}
-          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_D1C52544021F493D831592FB295FDC56 }}
-          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_1C4161DCD8244BAA801B381D594B2E74 }}
+          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_7DDDD85F0304474583F9E345E6232C02 }}
+          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_D61118D9304C4954AA635ABC2F41B76F }}
+          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_3690BCB1D4FF4C70B8FAD0ED4DC4E343 }}
 
       - name: 'Deploy to Azure Web App'
         uses: azure/webapps-deploy@v3
         id: deploy-to-webapp
         with:
-          app-name: 'vivarte8'
+          app-name: 'viv-arte'
           slot-name: 'Production'
-
           
-
-
-
-
-
