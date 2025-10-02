@@ -53,4 +53,4 @@ Neste tópico, documentamos a nossa experiência com a prática de Programação
 
 #### Screencast do Deploy das Histórias Implementadas
 
-- 👉 [Clique aqui para acessar o vídeo](https://youtu.be/tKdBd-vtArg)
+- 🎬 [Clique aqui para acessar o vídeo](https://youtu.be/tKdBd-vtArg)
