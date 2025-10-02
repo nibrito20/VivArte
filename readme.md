@@ -50,3 +50,7 @@ Criamos um protótipo de baixa fidelidade no Figma para representar a estrutura 
 Neste tópico, documentamos a nossa experiência com a prática de Programação em Par. Para entender os detalhes, desafios e aprendizados obtidos durante o processo.
 
 - 👉 [Clique aqui para acessar o relatório completo](https://docs.google.com/document/d/1M8ozVoiFYHHC7XLW48OckMtKpWRVdXbWguwumzyfgT8/edit?usp=sharing)
+
+#### Screencast do Deploy das Histórias Implementadas
+
+- 👉 [Clique aqui para acessar o vídeo](https://youtu.be/tKdBd-vtArg)
