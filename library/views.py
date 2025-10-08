@@ -42,3 +42,6 @@ def remove_from_wishlist(request, book_id):
             pass  # O item não está na lista, não faz nada
 
     return redirect('library:wishlist')
+
+#@login_required
+#def giveastar(request,)

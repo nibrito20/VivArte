@@ -6,11 +6,25 @@ from django.contrib.auth.models import User
 # Create your models here.
 
 class Book(models.Model):
+
+    avalchoices = (
+        (1, 'Nao gostei1'),
+        (2, 'Nao gostei2'),
+        (3, 'Nao gostei3'),
+        (4, 'Nao gostei4'),
+        (5, 'Nao gostei5'),
+        (0, 'neutro'),
+        
+
+    )
+
     title = models.CharField(max_length=100)
     details = models.TextField()
     creationdate = models.DateTimeField(auto_now_add=True)
     slug = models.SlugField()
     banner = models.ImageField(default='fallack.png', blank=True)
+    #stars = models.FloatField(,default=0) pra aparecer qual a media de estrelas do livro
+    aval = models.IntegerField(choices=avalchoices, default=0) # para avaliar o livro
 
     def __str__(self):
         return self.title 

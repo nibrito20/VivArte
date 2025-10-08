@@ -14,5 +14,8 @@
     <h1>{{ book.title }} please</h1>
     <p>{{ book.creationdate }} please</p>
     <p>{{ book.details }}</p>
+    {% if user.is_authenticated %}
+        <p>{{book.aval}}</p>
+    {% endif %}
     </section>
 {% endblock content %}
