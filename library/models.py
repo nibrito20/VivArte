@@ -5,6 +5,12 @@ from django.contrib.auth.models import User
 
 # Create your models here.
 
+class Genre(models.Model):
+    name = models.CharField(max_length=100, unique=True) 
+
+    def __str__(self):
+        return self.name
+
 class Book(models.Model):
 
     avalchoices = (
@@ -25,6 +31,7 @@ class Book(models.Model):
     banner = models.ImageField(default='fallack.png', blank=True)
     #stars = models.FloatField(,default=0) pra aparecer qual a media de estrelas do livro
     aval = models.IntegerField(choices=avalchoices, default=0) # para avaliar o livro
+    generos = models.ManyToManyField(Genre, blank=True)
 
     def __str__(self):
         return self.title 
