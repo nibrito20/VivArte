@@ -1,12 +1,24 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from .models import Book, Wishlist
+from .models import Book, Wishlist, Genre
 from django.contrib.auth.decorators import login_required
 # importar usuarios from users.migrations
 
 
-def booklist(request):
-    books = Book.objects.all().order_by('-creationdate')
-    return render(request, 'booklist.html', { 'books': books})
+def booklist(request, genero_slug=None):
+    genero_atual = None
+    todos_generos = Genre.objects.all()
+    if genero_slug:
+        genero_atual = get_object_or_404(Genre, slug=genero_slug)
+        
+        books = Book.objects.filter(generos__in=[genero_atual]).order_by('-creationdate')
+    else:
+        books = Book.objects.all().order_by('-creationdate')
+    context = {
+        'books': books,
+        'todos_generos': todos_generos,
+        'genero_atual': genero_atual
+    }
+    return render(request, 'booklist.html', context)
 
 def bookpage(request, slug):
     book = Book.objects.get(slug=slug)
