@@ -1,44 +1,85 @@
-{% extends "layout.html" %}
+{% extends 'layout.html' %}
+
 
 {% block title %}
-    Book list
+  Book List
 {% endblock %}
 
+
 {% block content %}
-<section>
-    <h1 style="color:#800020; text-align:center; margin-bottom:20px;">Livros disponíveis</h1>
 
-    <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap:20px; padding:20px;">
-        {% for book in books %}
-            <article class="book" style="border:1px solid #ddd; border-radius:8px; padding:15px; background:#fff; box-shadow:0 2px 5px rgba(0,0,0,0.1); text-align:center;">
-                
-                {% if book.cover %}
-                    <img src="{{ book.cover }}" alt="{{ book.title }}" style="width:120px; height:auto; margin-bottom:10px;">
-                {% else %}
-                    <img src="https://m.media-amazon.com/images/I/81t2CVWEsUL.jpg" alt="Livro genérico" style="width:120px; height:auto; margin-bottom:10px;">
-                {% endif %}
+  <style>
+    h1{color:#800020; text-align:center; margin-bottom:20px}Livros Disponíveis</h1>
+  </style>
 
-                <h2 style="color:#800020; font-size:1.2rem; margin-bottom:10px;">
-                    <a href="{% url 'library:detail' slug=book.slug %}" style="color:#800020; text-decoration:none;">
-                        {{ book.title }}
-                    </a>
-                </h2>
+  <nav style="text-align: center; margin-bottom: 25px; font-size: 1.1em;">
+    <strong style="color:#800020;">Filtrar por Gênero:</strong>
+    <ul style="list-style: none; padding: 0; margin-top: 10px;">
+      
+      <li style="display: inline-block; margin: 0 8px;">
+        <a href="{% url 'library:list' %}" style="text-decoration: none; color: #333; padding: 5px 10px; background-color: #f0f0f0; border-radius: 5px;">
+          Todos
+        </a>
+      </li>
 
-                <p><strong>Autor:</strong> {{ book.author|default:"Autor Desconhecido" }}</p>
-                <p><strong>Gênero:</strong> {{ book.genre|default:"Literatura" }}</p>
-                <p><strong>Ano:</strong> {{ book.year|default:"Desconhecido" }}</p>
-                <p><strong>Preço:</strong> R$ {{ book.price|default:"29,90" }}</p>
-                <p><small>Adicionado em {{ book.creationdate }}</small></p>
-            
+      {% for genero in todos_generos %}
+        <li style="display: inline-block; margin: 0 8px;">
+          <a href="{% url 'library:lista_por_genero' genero.slug %}" style="text-decoration: none; color: #333; padding: 5px 10px; background-color: #f0f0f0; border-radius: 5px;">
+            {{ genero.name }}
+          </a>
+        </li>
+      {% endfor %}
+    </ul>
+  </nav>
 
-                <a href="{% url 'library:add_to_wishlist' book_id=book.id %}" 
-                   style="display:inline-block; margin-top:10px; padding:8px 12px; background:#800020; color:white; text-decoration:none; border-radius:5px;">
-                   ➕ Adicionar à Lista de Desejos
-                </a>
-            </article>
-        {% empty %}
-            <p style="text-align:center; color:#555;">Nenhum livro encontrado.</p>
-        {% endfor %}
-    </div>
-</section>
-{% endblock content %}
+  {% if genero_atual %}
+    <h2 style="color:#800020; text-align:center; margin-bottom: 20px;">Mostrando: {{ genero_atual.name }}</h2>
+  {% else %}
+    <h2 style="color:#800020; text-align:center; margin-bottom: 20px;">Mostrando Todos os Livros</h2>
+  {% endif %}
+
+
+  <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap:20px; padding:20px;">
+    {% for book in books %}
+      <article class="book" style="border:1px solid #ddd; border-radius:8px; padding:15px; background:#fff; box-shadow:0 2px 5px rgba(0,0,0,0.1); text-align:center;">
+        
+        {% if book.cover %}
+          <img src="{{ book.cover }}" alt="{{ book.title }}" style="width:120px; height:auto; margin-bottom:10px;">
+        {% else %}
+          <img src="https://m.media-amazon.com/images/I/81jNZrJBJgL._SL1500_.jpg" alt="Livro genérico" style="width:120px; height:auto; margin-bottom:10px;">
+        {% endif %}
+        
+        <h2 style="color:#800020; font-size:1.2rem; margin-bottom:10px;">
+          <a href="{% url 'library:detail' book.slug %}" style="color:#800020; text-decoration:none;">
+            {{ book.title }}
+          </a>
+        </h2>
+        
+        <strong>Autor:</strong> <span>{{ book.author|default:"Autor Desconhecido" }}</span></br>
+        
+        <strong>Gênero:</strong> 
+        <span>
+            {% for g in book.generos.all %}
+                {{ g.name }}{% if not forloop.last %}, {% endif %}
+            {% empty %}
+                Literatura {% endfor %}
+        </span></br>
+        
+        <strong>Ano:</strong> <span>{{ book.year|default:"Desconhecido" }}</span></br>
+        <strong>Preço:</strong> <span>{{ book.price|default:"29.90" }}</span></br>
+        <small>Adicionado em {{ book.creationdate }}</small></br>
+        
+        <a href="{% url 'library:add_to_wishlist' book.id %}" 
+           style="display:inline-block; margin-top:10px; padding:8px 12px; background:#800020; color:white; text-decoration:none; border-radius:5px;">
+           Adicionar à Lista de Desejos
+        </a>
+      
+      </article>
+
+    {% empty %}
+      <p style="text-align:center; color:#555;">Nenhum livro encontrado.</p>
+    {% endfor %}
+
+  </div>
+  
+{% endblock %}
