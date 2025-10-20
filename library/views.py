@@ -1,6 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from .models import Book, Wishlist, Genre
+from .models import Book, Wishlist, Genre, ReviewRating
 from django.contrib.auth.decorators import login_required
+from .forms import reviewForm
 # importar usuarios from users.migrations
 
 
@@ -55,5 +56,23 @@ def remove_from_wishlist(request, book_id):
 
     return redirect('library:wishlist')
 
-#@login_required
-#def giveastar(request,)
+@login_required
+def submit_review(request, book_id):
+    url = request.META.get('HTTP_REFERER')
+    if request.method == 'POST':
+        try:
+            reviews = ReviewRating.objects.get(book__id=book_id)
+            form = reviewForm(request.POST, instance=reviews)
+            form.save()
+            return redirect(url)
+        except ReviewRating.DoesNotExist:
+            form = reviewForm(request.POST)
+            if form.is_valid():
+                data = ReviewRating()
+                data.subject = form.cleaned_data['subject']
+                data.rating = form.cleaned_data['rating']
+                data.review = form.cleaned_data['review']
+                data.book_id = book_id
+                data.user = request.user
+                data.save()
+                return redirect(url)

@@ -15,7 +15,26 @@
     <p>{{ book.creationdate }} please</p>
     <p>{{ book.details }}</p>
     {% if user.is_authenticated %}
-        <p>{{book.aval}}</p>
+        <form action="{% url 'library:submit_review' book.id %}" method="POST">
+            {% csrf_token %}
+            <h2>Sua avaliacao</h2>
+            <div>
+                <div class="rate">
+                    <input type="radio" name="rating" id="rating5" value="5" required /><label for="rating5" title="5"></label>
+                    <input type="radio" name="rating" id="rating4" value="4" required /><label for="rating4" title="4"></label>
+                    <input type="radio" name="rating" id="rating3" value="3" required /><label for="rating3" title="3"></label>
+                    <input type="radio" name="rating" id="rating2" value="2" required /><label for="rating2" title="2"></label>
+                    <input type="radio" name="rating" id="rating1" value="1" required /><label for="rating1" title="1"></label>
+                </div>
+                Titulo da avaliacao:
+                <input type="text" class="form-control" name="subject">
+                <br>
+                review:
+                <textarea name="review" rows="4"></textarea>
+                <br>
+                <input type="submit" value="Submit Review">
+            </div>
+        </form>
     {% endif %}
     </section>
 {% endblock content %}

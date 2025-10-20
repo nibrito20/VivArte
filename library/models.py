@@ -19,16 +19,6 @@ class Genre(models.Model):
 
 class Book(models.Model):
 
-    avalchoices = (
-        (1, 'Nao gostei1'),
-        (2, 'Nao gostei2'),
-        (3, 'Nao gostei3'),
-        (4, 'Nao gostei4'),
-        (5, 'Nao gostei5'),
-        (0, 'neutro'),
-        
-
-    )
 
     title = models.CharField(max_length=100)
     details = models.TextField()
@@ -36,7 +26,7 @@ class Book(models.Model):
     slug = models.SlugField()
     banner = models.ImageField(default='fallack.png', blank=True)
     #stars = models.FloatField(,default=0) pra aparecer qual a media de estrelas do livro
-    aval = models.IntegerField(choices=avalchoices, default=0) # para avaliar o livro
+
     generos = models.ManyToManyField(Genre, blank=True)
 
     def __str__(self):
@@ -55,3 +45,19 @@ class Wishlist(models.Model):
 
     def __str__(self):
         return f'{self.user.username} - {self.book.title}'
+
+
+class ReviewRating(models.Model):
+    book = models.ForeignKey(Book, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    review = models.TextField(max_length=500, blank=True)
+    rating = models.IntegerField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    modified_at = models.DateTimeField(auto_now=True)
+    subject = models.CharField(max_length=50, blank=True)
+
+    def __str__(self):
+        return f"{self.book} : {self.rating}"
+
+    def fullreview(self):
+        return self.review
