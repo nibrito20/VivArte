@@ -2,14 +2,20 @@ from django.db import models
 import datetime
 from django.utils import timezone
 from django.contrib.auth.models import User
+from django.utils.text import slugify
 
 # Create your models here.
 
 class Genre(models.Model):
-    name = models.CharField(max_length=100, unique=True) 
+    name = models.CharField(max_length=100, unique=True)
+    slug = models.SlugField(max_length=100, unique=True, blank=True)
 
     def __str__(self):
         return self.name
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.name)
+        super().save(*args, **kwargs)
 
 class Book(models.Model):
 
