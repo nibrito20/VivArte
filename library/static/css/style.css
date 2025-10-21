@@ -274,20 +274,20 @@ footer {
     height: 100px;
 }
 
-.rate > input{
+.rate > input {
     display: none;
 }
 
-.rate{
+.rate {
     display: inline-block;
     border: 0;
 }
 
-.rate >label{
+.rate > label {
     float:right;
 }
 
-.rate > label:before{
+.rate > label:before {
     display: inline-block;
     font-size: 1.1rem;
     font-family: FontAwesome;
@@ -297,11 +297,25 @@ footer {
     cursor: pointer;
 }
 
-input:checked ~ label, label:hover ~ label{
+input:checked ~ label, 
+label:hover ~ label {
     color:#ffb503;
     
 }
 
-input:checked + label:hover, input:checked ~ label:hover, input:checked ~ label:hover ~ label, label:hover ~ input:checked ~ label{
+input:checked + label:hover, 
+input:checked ~ label:hover, 
+input:checked ~ label:hover ~ label, 
+label:hover ~ input:checked ~ label {
     color: #cc9000;
+}
+
+.filter-btn {
+  transition: all 0.2s ease;
+}
+
+.filter-btn.active {
+  background-color: #800020;
+  color: white;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
 }

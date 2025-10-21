@@ -1,14 +1,14 @@
 {% extends 'layout.html' %}
 
 {% block title %}
-    Login
+    Entrar
 {% endblock %}
 
 {% block content %}
     <div class="login-background">
         <div class="login-card">
             <section class="login-h2">
-                <h2>login</h1>
+                <h2>Entrar</h1>
             </section>
             <form class="form-with-validation login-form" action="/users/login/" method="post">
                 {% csrf_token %}
