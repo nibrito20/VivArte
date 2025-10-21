@@ -1,20 +1,21 @@
 {% extends 'layout.html' %}
 
 {% block title %}
-  My Account
+  Minha conta
 {% endblock %}
 
 {% block content %}
-<div class="account-container" style="padding: 40px;">
-  <h1>My Account</h1>
-  <p>Here is your registration information.</p>
-  <hr>
-  
-  <div class="account-info">
-    <p><strong>Username:</strong> {{ user.username }}</p>
-    <p><strong>Full Name:</strong> {{ user.first_name }} {{ user.last_name }}</p>
-    <p><strong>Email:</strong> {{ user.email }}</p>
-  </div>
+<div class="account-container" style="max-width: 600px; margin: 50px auto; padding: 40px; background-color: #fff; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); font-family: Arial, sans-serif;">
+    
+    <h1 style="text-align: center; color: #800020; margin-bottom: 20px;">Minha conta</h1>
+    <p style="text-align: center; color: #555; margin-bottom: 30px;">Aqui está suas informações de registro.</p>
+    <hr style="border: none; border-top: 1px solid #eee; margin-bottom: 30px;">
 
-  </div>
+    <div class="account-info" style="line-height: 1.8; font-size: 16px; color: #333;">
+        <p><strong style="color: #800020;">Nome:</strong> {{ user.username }}</p>
+        <p><strong style="color: #800020;">Sobrenome:</strong> {{ user.first_name }} {{ user.last_name }}</p>
+        <p><strong style="color: #800020;">Email:</strong> {{ user.email }}</p>
+    </div>
+
+</div>
 {% endblock %}

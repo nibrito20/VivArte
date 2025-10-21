@@ -21,6 +21,7 @@ def booklist(request, genero_slug=None):
     }
     return render(request, 'booklist.html', context)
 
+
 def bookpage(request, slug):
     book = Book.objects.get(slug=slug)
     return render(request, 'bookpage.html', { 'book': book})
