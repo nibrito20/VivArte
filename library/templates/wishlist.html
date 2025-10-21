@@ -13,17 +13,17 @@
 
         {% for book in wished%}
             <article class="book">
-            <h2>
-                <a href="{% url 'library:detail' slug=book.slug %}">
-                    {{ book.title }} 
-                </a>
-            </h2>
-            <p>{{ book.creationdate }}</p>
-
-            <form action="{% url 'library:remove_from_wishlist' book_id=book.id %}" method="post">
-                {% csrf_token %}
-                <button type="submit">Remover da Wishlist</button>
-            </form>
+                <h2>
+                    <a href="{% url 'library:detail' slug=book.slug %}">
+                        {{ book.title }} 
+                    </a>
+                </h2>
+                <p>{{ book.creationdate }}</p>
+            
+                <form action="{% url 'library:remove_from_wishlist' book_id=book.id %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit">Remover da Wishlist</button>
+                </form>
             </article>
         {% endfor %}
         <img 
