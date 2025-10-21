@@ -1,40 +1,62 @@
 {% extends 'layout.html' %}
 
 {% block title %}
-
     {{ book.title }}
 {% endblock %}
 
 {% block content %}
-    <section>
+<section class="book-detail">
+    <div class="book-banner">
         <img 
-        class="banner"
-        src="{{ book.banner.url}}"
-        alt="{{ post.title }}"/>
-    <h1>{{ book.title }} please</h1>
-    <p>{{ book.creationdate }} please</p>
-    <p>{{ book.details }}</p>
+            class="banner"
+            src="{{ book.banner.url }}"
+            alt="{{ book.title }}"
+        />
+    </div>
+
+    <div class="book-info">
+        <h1 class="book-title">{{ book.title }}</h1>
+        <p class="book-date">{{ book.creationdate }}</p>
+        <p class="book-description">{{ book.details }}</p>
+    </div>
+
     {% if user.is_authenticated %}
-        <form action="{% url 'library:submit_review' book.id %}" method="POST">
+    <div class="review-section">
+        <form action="{% url 'library:submit_review' book.id %}" method="POST" class="review-form">
             {% csrf_token %}
-            <h2>Sua avaliacao</h2>
-            <div>
+            <h2>Deixe sua avaliação</h2>
+
+            <div class="rating-group">
+                <label class="rating-label">Sua nota:</label>
                 <div class="rate">
-                    <input type="radio" name="rating" id="rating5" value="5" required /><label for="rating5" title="5"></label>
-                    <input type="radio" name="rating" id="rating4" value="4" required /><label for="rating4" title="4"></label>
-                    <input type="radio" name="rating" id="rating3" value="3" required /><label for="rating3" title="3"></label>
-                    <input type="radio" name="rating" id="rating2" value="2" required /><label for="rating2" title="2"></label>
-                    <input type="radio" name="rating" id="rating1" value="1" required /><label for="rating1" title="1"></label>
+                    <input type="radio" name="rating" id="rating5" value="5" required />
+                    <label for="rating5" title="5 estrelas">★</label>
+                    <input type="radio" name="rating" id="rating4" value="4" required />
+                    <label for="rating4" title="4 estrelas">★</label>
+                    <input type="radio" name="rating" id="rating3" value="3" required />
+                    <label for="rating3" title="3 estrelas">★</label>
+                    <input type="radio" name="rating" id="rating2" value="2" required />
+                    <label for="rating2" title="2 estrelas">★</label>
+                    <input type="radio" name="rating" id="rating1" value="1" required />
+                    <label for="rating1" title="1 estrela">★</label>
                 </div>
-                Titulo da avaliacao:
-                <input type="text" class="form-control" name="subject">
-                <br>
-                review:
-                <textarea name="review" rows="4"></textarea>
-                <br>
-                <input type="submit" value="Submit Review">
+            </div>
+
+            <div class="form-group">
+                <label for="subject">Título da avaliação:</label>
+                <input type="text" id="subject" name="subject" class="form-control" placeholder="Ex: Incrível leitura!">
+            </div>
+
+            <div class="form-group">
+                <label for="review">Comentário:</label>
+                <textarea id="review" name="review" rows="4" class="form-control" placeholder="Compartilhe sua opinião sobre o livro..."></textarea>
+            </div>
+
+            <div class="form-actions">
+                <input type="submit" value="Enviar Avaliação" class="btn-submit">
             </div>
         </form>
+    </div>
     {% endif %}
-    </section>
+</section>
 {% endblock content %}
