@@ -30,13 +30,10 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
-      - name: 1. Instalar o leitor de JSON (jq)
-        run: |
-          sudo apt-get install -y jq
+      # O PASSO 1 (Instalar jq) FOI REMOVIDO
 
-      - name: 2. Rodar Git Pull, Instalação e Migração (Tudo no Console)
+      - name: 1. Rodar Git Pull, Instalação e Migração (Tudo no Console)
         run: |
-          # AGORA O GIT PULL ESTÁ AQUI DENTRO!
           COMMAND_STRING="source /home/livraria/.virtualenvs/vivarte-env-310/bin/activate && cd /home/livraria/VivArte && git pull origin main && pip install -r requirements.txt && python manage.py migrate\n"
           
           CONSOLE_ID=$(curl -X POST "https://www.pythonanywhere.com/api/v0/user/${{ secrets.PA_USERNAME }}/consoles/" \
@@ -51,10 +48,9 @@ jobs:
           -H "Authorization: Token ${{ secrets.PA_API_TOKEN }}" \
           -d "input=$COMMAND_STRING"
 
-          # Aumentado para 60s para garantir que o pip install termine
           sleep 60
 
-      - name: 3. Recarregar (Reload) a Aplicação Web
+      - name: 2. Recarregar (Reload) a Aplicação Web
         run: |
           curl -X POST "https://www.pythonanywhere.com/api/v0/user/${{ secrets.PA_USERNAME }}/webapps/livraria.pythonanywhere.com/reload/" \
           -H "Authorization: Token ${{ secrets.PA_API_TOKEN }}"
