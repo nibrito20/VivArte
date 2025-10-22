@@ -25,36 +25,39 @@ jobs:
 
       - name: 4. Rodar Testes (Django Check)
         run: |
-          # Este comando verifica se há erros no seu projeto Django
           python manage.py check
 
   deploy:
     needs: build-and-test
-
-    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-    
     runs-on: ubuntu-latest
-
+    
     steps:
 
-      - name: 1. Fazer checkout do código
-        uses: actions/checkout@v4
+      - name: 1. Fazer Git Pull no PythonAnywhere
+        run: |
+          curl -X POST "https://www.pythonanywhere.com/api/v0/user/${{ secrets.PA_USERNAME }}/webapps/livraria.pythonanywhere.com/git/pull/" \
+          -H "Authorization: Token ${{ secrets.PA_API_TOKEN }}"
 
-      - name: 2. Fazer Deploy no PythonAnywhere (com API)
-        uses: umuttopalak/pythonanywhere-deploy-action@v1.1.0
-        with:
-
-          host: "www.pythonanywhere.com"
-
-          username: ${{ secrets.PA_USERNAME }}
-          api_token: ${{ secrets.PA_API_TOKEN }}
-
-          domain_name: "livraria.pythonanywhere.com"
+      - name: 2. Rodar Instalação e Migrações no PythonAnywhere
+        run: |
+          COMMAND_STRING="source /home/livraria/.virtualenvs/vivarte-env-310/bin/activate && cd /home/livraria/VivArte && pip install -r requirements.txt && python manage.py migrate\n"
           
-          django_working_directory: "VivArte"
-
-          django_project_name: "project"
-         
-          venv_path: "/home/livraria/.virtualenvs/vivarte-env-310" 
+          CONSOLE_ID=$(curl -X POST "https://www.pythonanywhere.com/api/v0/user/${{ secrets.PA_USERNAME }}/consoles/" \
+          -H "Authorization: Token ${{ secrets.PA_API_TOKEN }}" \
+          -d "executable=bash" | jq -r .id)
           
-          python_version: "3.10"
+          echo "Console ID: $CONSOLE_ID"
+          
+          sleep 10
+          
+          curl -X POST "https://www.pythonanywhere.com/api/v0/user/${{ secrets.PA_USERNAME }}/consoles/$CONSOLE_ID/send_input/" \
+          -H "Authorization: Token ${{ secrets.PA_API_TOKEN }}" \
+          -d "input=$COMMAND_STRING"
+
+          sleep 30
+
+      - name: 3. Recarregar (Reload) a Aplicação Web
+        run: |
+          curl -X POST "https://www.pythonanywhere.com/api/v0/user/${{ secrets.PA_USERNAME }}/webapps/livraria.pythonanywhere.com/reload/" \
+          -H "Authorization: Token ${{ secrets.PA_API_TOKEN }}"
+
