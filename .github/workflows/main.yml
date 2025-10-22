@@ -1,0 +1,57 @@
+name: CI/CD Pipeline para PythonAnywhere
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 1. Fazer checkout do código
+        uses: actions/checkout@v4
+
+      - name: 2. Configurar o Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+
+      - name: 3. Instalar dependências
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: 4. Rodar Testes (Django Check)
+        run: |
+          # Este comando verifica se há erros no seu projeto Django
+          python manage.py check
+
+  deploy:
+    needs: build-and-test
+
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: 1. Fazer checkout do código
+        uses: actions/checkout@v4
+
+      - name: 2. Fazer Deploy no PythonAnywhere (com API)
+        uses: umuttopalak/pythonanywhere-deploy-action@v1.1.0
+        with:
+          username: ${{ secrets.PA_USERNAME }}
+          api_token: ${{ secrets.PA_API_TOKEN }}
+
+          domain_name: "livraria.pythonanywhere.com"
+          
+          django_working_directory: "VivArte"
+
+          django_project_name: "project"
+         
+          venv_path: "/home/livraria/.virtualenvs/vivarte-env-310" 
+          
+          python_version: "3.10"
