@@ -30,18 +30,16 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
+      # O PASSO 1 (Instalar jq) FOI REMOVIDO
+
       - name: 1. Rodar Git Pull, Instalação e Migração (Tudo no Console)
         run: |
           COMMAND_STRING="source /home/livraria/.virtualenvs/vivarte-env-310/bin/activate && cd /home/livraria/VivArte && git pull origin main && pip install -r requirements.txt && python manage.py migrate\n"
           
-          # --- MUDANÇA AQUI: Trocando 'jq' por 'python' ---
-          CONSOLE_JSON=$(curl -X POST "https://www.pythonanywhere.com/api/v0/user/${{ secrets.PA_USERNAME }}/consoles/" \
+          CONSOLE_ID=$(curl -X POST "https://www.pythonanywhere.com/api/v0/user/${{ secrets.PA_USERNAME }}/consoles/" \
           -H "Authorization: Token ${{ secrets.PA_API_TOKEN }}" \
-          -d "executable=bash")
+          -d "executable=bash" | jq -r .id)
           
-          CONSOLE_ID=$(echo $CONSOLE_JSON | python -c "import sys, json; print(json.load(sys.stdin)['id'])")
-          # --- FIM DA MUDANÇA ---
-
           echo "Console ID: $CONSOLE_ID"
           
           sleep 10
