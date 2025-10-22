@@ -54,3 +54,30 @@ Neste tópico, documentamos a nossa experiência com a prática de Programação
 #### Screencast do Deploy das Histórias Implementadas
 
 - 🎬 [Clique aqui para acessar o vídeo](https://youtu.be/tKdBd-vtArg)
+
+## Entrega 3
+
+### Histórias do Usuário
+
+#### Quadro (sprint)
+
+![Captura de tela do quadro na entrega 3 no projeto VivArte no Jira](img/quadro3.png)
+
+#### Backlog
+
+![Captura de tela do backlog na entrega 3 no projeto VivArte no Jira](img/backlog3.png)
+
+- 👉 [Clique aqui para acessar o docs com as histórias](https://docs.google.com/document/d/1RLXJphhes-Kdtzw0TnwXNYpnUd-U_wLkc0-pWla9O64/edit?tab=t.0)
+
+#### Programação em Par
+
+Nesta entrega, damos continuidade à documentação em Par. Para mais detalhes, consulte a documentação completa disponível no docs.
+
+- 👉 [Clique aqui para acessar o relatório completo](https://docs.google.com/document/d/1M8ozVoiFYHHC7XLW48OckMtKpWRVdXbWguwumzyfgT8/edit?usp=sharing)
+
+#### Issue/bug tracker
+
+#### Screencast do Deploy das Histórias Implementadas
+
+#### Screencast do processo build e deployment automatizado
+
