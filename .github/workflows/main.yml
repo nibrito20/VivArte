@@ -29,7 +29,7 @@ jobs:
     steps:
       - name: 1. Rodar Deploy Completo no Console
         run: |
-          # AQUI ESTÁ A CORREÇÃO: Adicionado 'git fetch origin'
+          # A string de comando corrigida:
           COMMAND_STRING="source /home/livraria/.virtualenvs/vivarte-env-310/bin/activate && cd /home/livraria/VivArte && export GIT_SSH_COMMAND='ssh -i /home/livraria/.ssh/github_deploy_key -o StrictHostKeyChecking=no' && git fetch origin && git reset --hard origin/main && pip install -r requirements.txt && export TARGET_ENV='dev' && python manage.py migrate && python manage.py collectstatic --noinput\n"
           
           # 1. Cria o console
@@ -59,4 +59,3 @@ jobs:
         run: |
           curl -X POST "https://www.pythonanywhere.com/api/v0/user/${{ secrets.PA_USERNAME }}/webapps/livraria.pythonanywhere.com/reload/" \
           -H "Authorization: Token ${{ secrets.PA_API_TOKEN }}"
-
