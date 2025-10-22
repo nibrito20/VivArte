@@ -3,8 +3,6 @@ name: CI/CD Pipeline para PythonAnywhere
 on:
   push:
     branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
 
 jobs:
   build-and-test:
@@ -32,15 +30,14 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
-
-      - name: 1. Fazer Git Pull no PythonAnywhere
+      - name: 1. Instalar o leitor de JSON (jq)
         run: |
-          curl -X POST "https://www.pythonanywhere.com/api/v0/user/${{ secrets.PA_USERNAME }}/webapps/livraria.pythonanywhere.com/git/pull/" \
-          -H "Authorization: Token ${{ secrets.PA_API_TOKEN }}"
+          sudo apt-get install -y jq
 
-      - name: 2. Rodar Instalação e Migrações no PythonAnywhere
+      - name: 2. Rodar Git Pull, Instalação e Migração (Tudo no Console)
         run: |
-          COMMAND_STRING="source /home/livraria/.virtualenvs/vivarte-env-310/bin/activate && cd /home/livraria/VivArte && pip install -r requirements.txt && python manage.py migrate\n"
+          # AGORA O GIT PULL ESTÁ AQUI DENTRO!
+          COMMAND_STRING="source /home/livraria/.virtualenvs/vivarte-env-310/bin/activate && cd /home/livraria/VivArte && git pull origin main && pip install -r requirements.txt && python manage.py migrate\n"
           
           CONSOLE_ID=$(curl -X POST "https://www.pythonanywhere.com/api/v0/user/${{ secrets.PA_USERNAME }}/consoles/" \
           -H "Authorization: Token ${{ secrets.PA_API_TOKEN }}" \
@@ -54,7 +51,8 @@ jobs:
           -H "Authorization: Token ${{ secrets.PA_API_TOKEN }}" \
           -d "input=$COMMAND_STRING"
 
-          sleep 30
+          # Aumentado para 60s para garantir que o pip install termine
+          sleep 60
 
       - name: 3. Recarregar (Reload) a Aplicação Web
         run: |
