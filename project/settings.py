@@ -10,7 +10,7 @@ load_dotenv(BASE_DIR / '.env')
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
-TARGET_ENV = os.getenv('TARGET_ENV')
+TARGET_ENV = os.getenv('TARGET_ENV', 'dev')
 NOT_PROD = not TARGET_ENV.lower().startswith('prod')
 
 if NOT_PROD:
@@ -18,7 +18,7 @@ if NOT_PROD:
     DEBUG = True
     # SECURITY WARNING: keep the secret key used in production secret!
     SECRET_KEY = 'django-insecure-r$vr8h5igry)+lrrolc)7=fif#bpj!&gg1nwj@87sg-3bk0$1f'
-    ALLOWED_HOSTS = ['livraria.pythonanywhere.com', '127.0.0.1', 'localhost']
+    ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.sqlite3',
@@ -29,8 +29,8 @@ else:
     SECRET_KEY = os.getenv('SECRET_KEY')
     DEBUG = os.getenv('DEBUG', '0').lower() in ['true', 't', '1']
     #ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS').split(' ')
-    ALLOWED_HOSTS = ['livraria.pythonanywhere.com', '127.0.0.1', 'localhost']
-    CSRF_TRUSTED_ORIGINS = os.getenv('CSRF_TRUSTED_ORIGINS').split(' ')
+    ALLOWED_HOSTS = ['livraria.pythonanywhere.com']
+    CSRF_TRUSTED_ORIGINS = ['https://livraria.pythonanywhere.com']
 
     SECURE_SSL_REDIRECT = \
         os.getenv('SECURE_SSL_REDIRECT', '0').lower() in ['true', 't', '1']
