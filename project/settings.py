@@ -28,8 +28,7 @@ if NOT_PROD:
 else:
     SECRET_KEY = os.getenv('SECRET_KEY')
     DEBUG = os.getenv('DEBUG', '0').lower() in ['true', 't', '1']
-    #ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS').split(' ')
-    ALLOWED_HOSTS = ['livraria.pythonanywhere.com']
+    ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
     CSRF_TRUSTED_ORIGINS = ['https://livraria.pythonanywhere.com']
 
     SECURE_SSL_REDIRECT = \
