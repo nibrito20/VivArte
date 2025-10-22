@@ -1,75 +1,115 @@
 {% extends 'layout.html' %}
-{% load static %}
+
 
 {% block title %}
-Minha Lista de Livros
+  Book List
 {% endblock %}
+
 
 {% block content %}
 
+  <style>
+    h1{color:#800020; text-align:center; margin-bottom:20px}Livros Disponíveis</h1>
 
-<div class="genre-container" style="text-align:center; margin-bottom:25px; background-color:#800020">
-    <button id="toggleBtn" style="background-color:#800020; color:white; border:none; padding:10px 16px; cursor:pointer; width: 100%;">
-        Gêneros
-    </button>
+    .rating-stars {
+      color: #ccc; 
+      font-size: 1.1em;
+      margin-bottom: 5px;
+    }
+    .rating-stars .filled {
+      color: #f8d64e; 
+    }
+    .rating-stars small {
+      color: #777;
+      font-size: 0.8em;
+      vertical-align: middle;
+      margin-left: 5px;
+    }
+  </style>
 
-    <div id="genresDiv" style="display:none; margin-top:15px; flex-wrap:wrap; gap:8px; background-color:#800020;">
-        <button class="filter-btn active" data-genero="todos" style="border:none; padding:5px 10px; border-radius:5px; cursor:pointer; margin:3px;">
-          Nenhum
-        </button>
+  <nav style="text-align: center; margin-bottom: 25px; font-size: 1.1em;">
+    <strong style="color:#800020;">Filtrar por Gênero:</strong>
+    <ul style="list-style: none; padding: 0; margin-top: 10px;">
+      
+      <li style="display: inline-block; margin: 0 8px;">
+        <a href="{% url 'library:list' %}" style="text-decoration: none; color: #333; padding: 5px 10px; background-color: #f0f0f0; border-radius: 5px;">
+          Todos
+        </a>
+      </li>
 
-        {% for genero in todos_generos %}
-        <button class="filter-btn" data-genero="{{ genero.slug }}" style="border:none; padding:5px 10px; border-radius:5px; cursor:pointer; margin:3px;">
-          {{ genero.name }}
-        </button>
-        {% endfor %}
+      {% for genero in todos_generos %}
+        <li style="display: inline-block; margin: 0 8px;">
+          <a href="{% url 'library:lista_por_genero' genero.slug %}" style="text-decoration: none; color: #333; padding: 5px 10px; background-color: #f0f0f0; border-radius: 5px;">
+            {{ genero.name }}
+          </a>
+        </li>
+      {% endfor %}
+    </ul>
+  </nav>
 
-    </div>
-</div>
+  {% if genero_atual %}
+    <h2 style="color:#800020; text-align:center; margin-bottom: 20px;">Mostrando: {{ genero_atual.name }}</h2>
+  {% else %}
+    <h2 style="color:#800020; text-align:center; margin-bottom: 20px;">Mostrando Todos os Livros</h2>
+  {% endif %}
 
-<h2 style="color:#800020; text-align:center; margin-bottom: 20px;">Mostrando Todos os Livros</h2>
 
-<div id="bookContainer" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap:20px; padding:20px;">
+  <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap:20px; padding:20px;">
     {% for book in books %}
-    <article class="book"
-             data-generos="{% for g in book.generos.all %}{{ g.slug }}{% if not forloop.last %},{% endif %}{% endfor %}"
-             style="border:1px solid #ddd; border-radius:8px; padding:15px; background:#fff; box-shadow:0 2px 5px rgba(0,0,0,0.1); text-align:center;">
+      <article class="book" style="border:1px solid #ddd; border-radius:8px; padding:15px; background:#fff; box-shadow:0 2px 5px rgba(0,0,0,0.1); text-align:center;">
         
         {% if book.cover %}
-        <img src="{{ book.cover }}" alt="{{ book.title }}" style="width:120px; height:auto; margin-bottom:10px;">
+          <img src="{{ book.cover }}" alt="{{ book.title }}" style="width:120px; height:auto; margin-bottom:10px;">
         {% else %}
-        <img src="https://m.media-amazon.com/images/I/81jNZrJBJgL._SL1500_.jpg" alt="Livro genérico" style="width:120px; height:auto; margin-bottom:10px;">
+          <img src="https://m.media-amazon.com/images/I/81jNZrJBJgL._SL1500_.jpg" alt="Livro genérico" style="width:120px; height:auto; margin-bottom:10px;">
         {% endif %}
         
         <h2 style="color:#800020; font-size:1.2rem; margin-bottom:10px;">
-            <a href="{% url 'library:detail' book.slug %}" style="color:#800020; text-decoration:none;">
-                {{ book.title }}
-            </a>
+          <a href="{% url 'library:detail' book.slug %}" style="color:#800020; text-decoration:none;">
+            {{ book.title }}
+          </a>
         </h2>
         
-        <strong>Autor:</strong> <span>{{ book.author|default:"Autor Desconhecido" }}</span><br>
-        <strong>Gênero:</strong>
+        <strong>Autor:</strong> <span>{{ book.author|default:"Autor Desconhecido" }}</span></br>
+        
+        <strong>Gênero:</strong> 
         <span>
             {% for g in book.generos.all %}
                 {{ g.name }}{% if not forloop.last %}, {% endif %}
             {% empty %}
-                Literatura
-            {% endfor %}
-        </span><br>
-        <strong>Ano:</strong> <span>{{ book.year|default:"Desconhecido" }}</span><br>
-        <strong>Preço:</strong> <span>{{ book.price|default:"29.90" }}</span><br>
-        <small>Adicionado em {{ book.creationdate }}</small><br>
+                Literatura {% endfor %}
+        </span></br>
+        
+        <strong>Ano:</strong> <span>{{ book.year|default:"Desconhecido" }}</span></br>
+        <strong>Preço:</strong> <span>{{ book.price|default:"29.90" }}</span></br>
 
-        <a href="{% url 'library:add_to_wishlist' book.id %}"
+        <div class="rating-stars">
+          {% with rating=book.average_rating|default:0 %}
+            <span class="{% if rating >= 1 %}filled{% endif %}">★</span>
+            <span class="{% if rating >= 2 %}filled{% endif %}">★</span>
+            <span class="{% if rating >= 3 %}filled{% endif %}">★</span>
+            <span class="{% if rating >= 4 %}filled{% endif %}">★</span>
+            <span class="{% if rating >= 5 %}filled{% endif %}">★</span>
+            
+            {% if rating == 0 %}
+              <small>(Nenhuma avaliação)</small>
+            {% endif %}
+          {% endwith %}
+        </div>
+        
+        <small>Adicionado em {{ book.creationdate }}</small></br>
+        
+        <a href="{% url 'library:add_to_wishlist' book.id %}" 
            style="display:inline-block; margin-top:10px; padding:8px 12px; background:#800020; color:white; text-decoration:none; border-radius:5px;">
-            Adicionar à Lista de Desejos
+           Adicionar à Lista de Desejos
         </a>
-    </article>
+      
+      </article>
+
     {% empty %}
-    <p style="text-align:center; color:#555;">Nenhum livro encontrado.</p>
+      <p style="text-align:center; color:#555;">Nenhum livro encontrado.</p>
     {% endfor %}
-</div>
 
-
-<script src="{% static 'scripts/booklist.js' %}"></script>
+  </div>
+  
 {% endblock %}
