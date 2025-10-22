@@ -43,6 +43,9 @@ jobs:
       - name: 2. Fazer Deploy no PythonAnywhere (com API)
         uses: umuttopalak/pythonanywhere-deploy-action@v1.1.0
         with:
+
+          host: "www.pythonanywhere.com"
+
           username: ${{ secrets.PA_USERNAME }}
           api_token: ${{ secrets.PA_API_TOKEN }}
 
