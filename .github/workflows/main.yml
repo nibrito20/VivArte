@@ -10,17 +10,14 @@ jobs:
     steps:
       - name: 1. Fazer checkout do código
         uses: actions/checkout@v4
-
       - name: 2. Configurar o Python
         uses: actions/setup-python@v5
         with:
           python-version: "3.10"
-
       - name: 3. Instalar dependências
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
-
       - name: 4. Rodar Testes (Django Check)
         run: |
           python manage.py check
@@ -30,26 +27,31 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
-      - name: 1. Rodar Git Reset, Instalação e Migração
+      - name: 1. Rodar Deploy Completo no Console
         run: |
-          # Usando 'git reset --hard' para forçar a atualização
-          COMMAND_STRING="source /home/livraria/.virtualenvs/vivarte-env-310/bin/activate && cd /home/livraria/VivArte && git reset --hard origin/main && pip install -r requirements.txt && python manage.py migrate\n"
+          # Esta é a string de comando final, corrigida:
+          COMMAND_STRING="source /home/livraria/.virtualenvs/vivarte-env-310/bin/activate && cd /home/livraria/VivArte && export GIT_SSH_COMMAND='ssh -i /home/livraria/.ssh/github_deploy_key -o StrictHostKeyChecking=no' && git reset --hard origin/main && pip install -r requirements.txt && export TARGET_ENV='dev' && python manage.py migrate && python manage.py collectstatic --noinput\n"
           
+          # 1. Cria o console
           CONSOLE_JSON=$(curl -X POST "https://www.pythonanywhere.com/api/v0/user/${{ secrets.PA_USERNAME }}/consoles/" \
           -H "Authorization: Token ${{ secrets.PA_API_TOKEN }}" \
           -d "executable=bash")
           
+          # 2. Extrai o ID do console
           CONSOLE_ID=$(echo $CONSOLE_JSON | python -c "import sys, json; print(json.load(sys.stdin)['id'])")
           echo "Console ID: $CONSOLE_ID"
           
           sleep 10
           
+          # 3. Envia os comandos para o console
           curl -X POST "https://www.pythonanywhere.com/api/v0/user/${{ secrets.PA_USERNAME }}/consoles/$CONSOLE_ID/send_input/" \
           -H "Authorization: Token ${{ secrets.PA_API_TOKEN }}" \
           -d "input=$COMMAND_STRING"
 
-          sleep 60
+          # Aumentado para 90s para dar tempo ao pip e migrate
+          sleep 90
 
+          # 4. Deleta o console
           echo "Limpando o console..."
           curl -X DELETE "https://www.pythonanywhere.com/api/v0/user/${{ secrets.PA_USERNAME }}/consoles/$CONSOLE_ID/" \
           -H "Authorization: Token ${{ secrets.PA_API_TOKEN }}"
