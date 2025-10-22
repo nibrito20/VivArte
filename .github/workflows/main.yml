@@ -1,4 +1,4 @@
-name: CI/CD Pipeline para PythonAnywhere
+name: CI/CD Pipeline para PythonAnywhere (MODO DEBUG)
 
 on:
   push:
@@ -34,10 +34,19 @@ jobs:
         run: |
           COMMAND_STRING="source /home/livraria/.virtualenvs/vivarte-env-310/bin/activate && cd /home/livraria/VivArte && git pull origin main && pip install -r requirements.txt && python manage.py migrate\n"
           
+          # --- MUDANÇA DE DEBUG AQUI ---
+          # 1. Tenta criar o console e salva a resposta (JSON ou ERRO)
           CONSOLE_JSON=$(curl -X POST "https://www.pythonanywhere.com/api/v0/user/${{ secrets.PA_USERNAME }}/consoles/" \
           -H "Authorization: Token ${{ secrets.PA_API_TOKEN }}" \
           -d "executable=bash")
           
+          # 2. IMPRIME A RESPOSTA NO LOG PARA NÓS LERMOS
+          echo "--- RESPOSTA DA API DO CONSOLE ---"
+          echo "$CONSOLE_JSON"
+          echo "----------------------------------"
+          # --- FIM DA MUDANÇA DE DEBUG ---
+
+          # 3. Tenta ler o JSON (vai falhar, mas tudo bem)
           CONSOLE_ID=$(echo $CONSOLE_JSON | python -c "import sys, json; print(json.load(sys.stdin)['id'])")
 
           echo "Console ID: $CONSOLE_ID"
@@ -54,3 +63,4 @@ jobs:
         run: |
           curl -X POST "https://www.pythonanywhere.com/api/v0/user/${{ secrets.PA_USERNAME }}/webapps/livraria.pythonanywhere.com/reload/" \
           -H "Authorization: Token ${{ secrets.PA_API_TOKEN }}"
+
