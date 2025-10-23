@@ -87,3 +87,5 @@ Nesta entrega, damos continuidade à documentação em Par. Para mais detalhes, 
 - 🎬 [Clique aqui para acessar o vídeo](https://youtu.be/8oSQuyiw9nA)
 
 #### Teste E2E
+
+- 🎬 [Clique aqui para acessar o vídeo](https://youtu.be/MAYMH_YHVgE)
