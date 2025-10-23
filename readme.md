@@ -61,13 +61,13 @@ Neste tópico, documentamos a nossa experiência com a prática de Programação
 
 #### Quadro (sprint)
 
-![Captura de tela do quadro na entrega 3 no projeto VivArte no Jira](img/quadro3.png)
+![Captura de tela do quadro na entrega 3 no projeto VivArte no Jira](img/backlog3.png)
 
 #### Backlog
 
-![Captura de tela do backlog na entrega 3 no projeto VivArte no Jira](img/backlog3.png)
+![Captura de tela do backlog na entrega 3 no projeto VivArte no Jira](https://github.com/nibrito20/VivArte/blob/main/img/Captura%20de%20Tela%202025-10-22%20às%2022.36.23.png)
 
-- 👉 [Clique aqui para acessar o docs com as histórias](https://docs.google.com/document/d/1RLXJphhes-Kdtzw0TnwXNYpnUd-U_wLkc0-pWla9O64/edit?tab=t.0)
+- 👉 [Clique aqui para acessar o docs com as histórias](img/)
 
 #### Programação em Par
 
