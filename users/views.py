@@ -4,43 +4,39 @@ from django.contrib.auth import login, logout
 from django.contrib.auth.decorators import login_required
 from .forms import CustomUserCreationForm
 
-#mudar todos os library:list para library:home, NAO EH PRA FAZER ISSO AINDA SO QUANDO A GNT ADICIONAR HOME NO LIBRARY
-
 def register_view(request):
-
     if request.method == "POST":
         form = CustomUserCreationForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('library:list')
+            return redirect('library:list')  # Aqui seria para a página onde o usuário será redirecionado após o registro
     else:
         form = CustomUserCreationForm()
     return render(request, "users/register.html", {"form": form})
 
 def login_view(request):
-
     if request.method == "POST":
         form = AuthenticationForm(data=request.POST)
         if form.is_valid():
             user = form.get_user()
             login(request, user)
-            if 'next' in request.POST:
-                return redirect(request.POST.get('next'))
+
+            # Verifica se o parâmetro 'next' foi passado na URL
+            next_url = request.GET.get('next')
+            if next_url:
+                return redirect(next_url)  # Redireciona para a URL original que o usuário queria acessar
             else:
-                return redirect('library:list')
+                return redirect('library:home')  # Redireciona para a página principal (home ou qualquer outra página que você defina)
     else:
         form = AuthenticationForm()
+    
     return render(request, "users/login.html", {"form": form})
-    #ia ser legal um java script aqr pra dar um alert que a conta nao existe ou que a senha ta incorreta algo assim
-
 
 def logout_view(request):
-
     if request.method == "POST":
         logout(request)
-        return redirect('library:list')
+        return redirect('library:list')  # Redireciona para a página de listagem ou homepage após logout
     
 @login_required
 def account_view(request):
     return render(request, 'users/account.html')
-

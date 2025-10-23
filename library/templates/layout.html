@@ -16,7 +16,7 @@
     <header>
         <nav>
             <ul class="nav-list">
-                <li><a href="/" class="nav-link">Início</a></li>
+                <li><a href="/" class="nav-link">Inicio</a></li>
                 <li><a href="{% url 'library:list' %}" class="nav-link">Biblioteca</a></li>
                 {% if user.is_authenticated %}
                     <li><a href="{% url 'library:wishlist' %}" class="nav-link">Lista de desejos</a></li>
@@ -24,20 +24,13 @@
                     <li><a href="{% url 'users:login' %}" class="nav-link">Lista de desejos</a></li>
                 {% endif %}
             </ul>
-
-            <div class="nav-logo-container">
-                <a href="/"><img src="/media/logo-vivarte.png" alt="VivArte Logo" class="nav-logo"></a>
+            <div>
+                <a href="/"><img src="/media/logo-vivarte.png" alt="" class="nav-logo"></a>
             </div>
-
             <ul class="nav-list">
                 {% if user.is_authenticated %}
-                    <li><a href="#" class="nav-link">Vender</a></li>
-                    <li>
-                        <form action="{% url 'users:logout' %}" method="post" class="nav-form">
-                            {% csrf_token %}
-                            <button class="nav-button">Sair</button>
-                        </form>
-                    </li>
+                    <li><a href="" class="nav-link">Vender</a></li>
+                    <li><form action="{% url 'users:logout' %}" method="post" class="nav-form"> {% csrf_token %} <button class="nav-button" >Sair</button></form></li>
                     <li><a href="{% url 'users:account' %}" class="nav-link"><i>icone</i></a></li>
                 {% else %}
                     <li><a href="{% url 'users:register' %}" class="nav-link">Registrar</a></li>
@@ -46,22 +39,42 @@
             </ul>
         </nav>
     </header>
-
     <main>
         {% block content %}
+        
         {% endblock %}
     </main>
-
     <footer style="background-color:#6C1425; color:white; padding: 40px 20px; text-align:center;">
 
-    <!-- Contatos -->
-    <div style="margin-bottom: 14px;">
-        <p>Email: contato@vivarte.com</p>
-        <p>Telefone: (00) 1234-5678</p>
-        <p style="font-size: 14px;">&copy; 2025 VivArte. Todos os direitos reservados.</p>
-    </div>
+  <!-- Nome da empresa -->
+  <h3>VivArte</h3>
+  <p>Transformando leitura em experiências inesquecíveis</p>
+
+  <!-- Newsletter -->
+  <div style="margin: 20px 0;">
+    <p>Assine nossa newsletter:</p>
+    <form>
+      <input type="email" placeholder="Seu e-mail" style="padding:8px; width:200px;">
+      <button type="submit" style="padding:8px 12px; background-color:white; color:#6C1425; border:none; cursor:pointer;">Enviar</button>
+    </form>
+  </div>
+
+  <!-- Redes sociais -->
+  <div style="margin: 20px 0;">
+    <a href="#" style="color:white; margin: 0 10px;">Facebook</a> |
+    <a href="#" style="color:white; margin: 0 10px;">Instagram</a> |
+    <a href="#" style="color:white; margin: 0 10px;">Twitter</a>
+  </div>
+
+  <!-- Contato -->
+  <div style="margin-top: 20px;">
+    <p>Email: contato@vivarte.com</p>
+    <p>Telefone: (00) 1234-5678</p>
+  </div>
+
+  <!-- Direitos -->
+  <p style="margin-top: 20px; font-size: 14px;">&copy; 2025 VivArte. Todos os direitos reservados.</p>
 
 </footer>
-
 </body>
 </html>
