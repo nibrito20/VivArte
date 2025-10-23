@@ -15,7 +15,7 @@ class UserFlowE2ETest(LiveServerTestCase):
         options = Options()
         options.add_argument("start-maximized")
         
-        service = Service(r"C:\Users\jotaa\Downloads\edgedriver_win64 (1)\msedgedriver.exe")
+        service = Service(r"C:\Users\jotaa\Downloads\edgedriver_win64\msedgedriver.exe")
         self.browser = webdriver.Edge(service=service, options=options)
         
         self.user = User.objects.create_user(username='joaopfdias', password='SAOaloGGO123', email='joaopfdias@example.com')
