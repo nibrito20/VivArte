@@ -84,5 +84,6 @@ Nesta entrega, damos continuidade à documentação em Par. Para mais detalhes, 
 ![Captura de tela do issues no github](img/captura_de_tela_issues.png)
 
 #### Screencast do processo build e deployment automatizado
+- 🎬 [Clique aqui para acessar o vídeo](https://youtu.be/8oSQuyiw9nA)
 
 #### Teste E2E
