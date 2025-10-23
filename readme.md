@@ -77,7 +77,7 @@ Nesta entrega, damos continuidade à documentação em Par. Para mais detalhes, 
 
 #### Screencast do Deploy das Histórias Implementadas
 
-- 🎬 [Clique aqui para acessar o vídeo]([https://youtu.be/tKdBd-vtArg](https://youtu.be/VrKWUx5uOKg?si=XlYa-4PaE0skhI0j))
+- 🎬 [Clique aqui para acessar o vídeo](https://youtu.be/VrKWUx5uOKg?si=XlYa-4PaE0skhI0j)
 
 #### Issue/bug tracker
 
