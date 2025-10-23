@@ -75,6 +75,10 @@ Nesta entrega, damos continuidade à documentação em Par. Para mais detalhes, 
 
 - 👉 [Clique aqui para acessar o relatório completo](https://docs.google.com/document/d/1M8ozVoiFYHHC7XLW48OckMtKpWRVdXbWguwumzyfgT8/edit?usp=sharing)
 
+#### Screencast do Deploy das Histórias Implementadas
+
+- 🎬 [Clique aqui para acessar o vídeo](https://youtu.be/VrKWUx5uOKg?si=XlYa-4PaE0skhI0j)
+
 #### Issue/bug tracker
 
 #### Screencast do Deploy das Histórias Implementadas
