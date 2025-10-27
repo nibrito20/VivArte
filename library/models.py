@@ -17,6 +17,17 @@ class Genre(models.Model):
             self.slug = slugify(self.name)
         super().save(*args, **kwargs)
 
+class RatingSearch(models.Model):
+    rating = models.IntegerField()
+    slug = models.SlugField(max_length=100, unique=True, blank=True)
+
+    def __str__(self):
+        return str(self.rating)
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.rating)
+        super().save(*args, **kwargs)
+
 class Book(models.Model):
 
 
@@ -28,6 +39,7 @@ class Book(models.Model):
     #stars = models.FloatField(,default=0) pra aparecer qual a media de estrelas do livro
 
     generos = models.ManyToManyField(Genre, blank=True)
+    rating = models.ManyToManyField(RatingSearch, blank=True)
 
     def __str__(self):
         return self.title 
@@ -47,6 +59,7 @@ class Wishlist(models.Model):
         return f'{self.user.username} - {self.book.title}'
 
 
+
 class ReviewRating(models.Model):
     book = models.ForeignKey(Book, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -61,3 +74,4 @@ class ReviewRating(models.Model):
 
     def fullreview(self):
         return self.review
+    

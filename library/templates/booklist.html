@@ -46,14 +46,28 @@
           </a>
         </li>
       {% endfor %}
+      {% for aval in todos_aval %}
+        <li style="display: inline-block; margin: 0 8px;">
+          <a href="{% url 'library:lista_por_avaliacao' aval.slug %}" style="text-decoration: none; color: #333; padding: 5px 10px; background-color: #f0f0f0; border-radius: 5px;">
+            {{ aval.rating }}
+          </a>
+        </li>
+      {% endfor %}
     </ul>
   </nav>
 
+  
+
+
   {% if genero_atual %}
     <h2 style="color:#800020; text-align:center; margin-bottom: 20px;">Mostrando: {{ genero_atual.name }}</h2>
-  {% else %}
+  {% elif aval_atual %}
+    <h2 style="color:#800020; text-align:center; margin-bottom: 20px;">Mostrando: {{ aval_atual.slug }} estrelas</h2>
+    
+  {% else%}
     <h2 style="color:#800020; text-align:center; margin-bottom: 20px;">Mostrando Todos os Livros</h2>
   {% endif %}
+
 
 
   <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap:20px; padding:20px;">
@@ -82,11 +96,12 @@
                 Literatura {% endfor %}
         </span></br>
         
+        
         <strong>Ano:</strong> <span>{{ book.year|default:"Desconhecido" }}</span></br>
         <strong>Preço:</strong> <span>{{ book.price|default:"29.90" }}</span></br>
 
         <div class="rating-stars">
-          {% with rating=book.average_rating|default:0 %}
+          {% with rating=book.rating|default:0 %}
             <span class="{% if rating >= 1 %}filled{% endif %}">★</span>
             <span class="{% if rating >= 2 %}filled{% endif %}">★</span>
             <span class="{% if rating >= 3 %}filled{% endif %}">★</span>

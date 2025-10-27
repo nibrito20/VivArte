@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.utils.html import format_html
-from .models import Book, Genre, ReviewRating
+from .models import Book, Genre, ReviewRating, RatingSearch
 
 class BookAdmin(admin.ModelAdmin):
     fieldsets = [
@@ -8,10 +8,10 @@ class BookAdmin(admin.ModelAdmin):
             'fields': ['title', 'details', 'slug', 'banner']
         }),
         ('Categorização e Avaliação', {
-            'fields': ['generos']
+            'fields': ['generos', 'rating']
         }),
     ]
-    filter_horizontal = ('generos',)
+    filter_horizontal = ('generos','rating')
 
     # ✅ Mostra miniatura da capa na listagem
     list_display = ('title', 'cover_preview', 'slug')
@@ -26,3 +26,4 @@ class BookAdmin(admin.ModelAdmin):
 admin.site.register(Genre) 
 admin.site.register(Book, BookAdmin) 
 admin.site.register(ReviewRating)
+admin.site.register(RatingSearch)
