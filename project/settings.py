@@ -130,7 +130,7 @@ USE_TZ = True
 
 #STATIC_URL = "static/"
 STATIC_URL = os.environ.get('DJANGO_STATIC_URL', "/static/")
-STATIC_ROOT = '/home/livraria/VIVARTE/staticfiles'
+STATIC_ROOT = '/home/livraria/VivArte/staticfiles'
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 

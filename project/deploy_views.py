@@ -5,8 +5,8 @@ from django.http import HttpResponse, HttpResponseForbidden
 from subprocess import Popen
 from django.views.decorators.csrf import csrf_exempt
 
-REPO_PATH = '/home/livraria/VIVARTE/'
-WSGI_PATH = '/home/livraria/VIVARTE/project/wsgi.py'
+REPO_PATH = '/home/livraria/VivArte/'
+WSGI_PATH = '/home/livraria/VivArte/project/wsgi.py'
 WEBHOOK_SECRET = os.environ.get('GITHUB_WEBHOOK_SECRET', 'NO_SECRET_FOUND')
 @csrf_exempt
 def deploy_webhook(request):
