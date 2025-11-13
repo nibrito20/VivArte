@@ -27,6 +27,26 @@
       vertical-align: middle;
       margin-left: 5px;
     }
+    /* CSS ADICIONADO: 
+      Para o 'Ano' e 'Preço' ficarem lado a lado.
+    */
+    .book-details {
+      display: flex;
+      justify-content: center; /* Centraliza os itens */
+      gap: 20px; /* Espaço entre "Ano" e "Preço" */
+      margin-top: 10px;
+      margin-bottom: 10px;
+      font-size: 0.9em;
+      color: #000000;
+    }
+
+    .book-detail-item strong {
+      color: #000000; /* Rótulo com cor mais suave */
+    }
+
+    .book-detail-item span {
+      font-weight: bold; /* Valor em negrito */
+    }
   </style>
 
   <nav style="text-align: center; margin-bottom: 25px; font-size: 1.1em;">
@@ -74,10 +94,9 @@
     {% for book in books %}
       <article class="book" style="border:1px solid #ddd; border-radius:8px; padding:15px; background:#fff; box-shadow:0 2px 5px rgba(0,0,0,0.1); text-align:center;">
         
-        {% if book.cover %}
-          <img src="{{ book.cover }}" alt="{{ book.title }}" style="width:120px; height:auto; margin-bottom:10px;">
+        {% if book.banner.url %}
+          <img src="{{ book.banner.url }}" alt="{{ book.title }}" style="width:120px; height:auto; margin-bottom:10px;">
         {% else %}
-          <img src="https://m.media-amazon.com/images/I/81jNZrJBJgL._SL1500_.jpg" alt="Livro genérico" style="width:120px; height:auto; margin-bottom:10px;">
         {% endif %}
         
         <h2 style="color:#800020; font-size:1.2rem; margin-bottom:10px;">
@@ -85,20 +104,17 @@
             {{ book.title }}
           </a>
         </h2>
+                
+      
         
-        <strong>Autor:</strong> <span>{{ book.author|default:"Autor Desconhecido" }}</span></br>
-        
-        <strong>Gênero:</strong> 
-        <span>
-            {% for g in book.generos.all %}
-                {{ g.name }}{% if not forloop.last %}, {% endif %}
-            {% empty %}
-                Literatura {% endfor %}
-        </span></br>
-        
-        
-        <strong>Ano:</strong> <span>{{ book.year|default:"Desconhecido" }}</span></br>
-        <strong>Preço:</strong> <span>{{ book.price|default:"29.90" }}</span></br>
+        <div class="book-details">
+          
+          <div class="book-detail-item">
+            <strong>Preço:</strong> 
+            <span>R$ {{ book.price|default:"29.90"|floatformat:2 }}</span>
+          </div>
+        </div>
+
 
         <div class="rating-stars">
           {% with rating=book.rating|default:0 %}
