@@ -1,148 +1,293 @@
 {% extends 'layout.html' %}
 
-
 {% block title %}
-  Book List
+  Livros
 {% endblock %}
-
 
 {% block content %}
 
-  <style>
-    h1{color:#800020; text-align:center; margin-bottom:20px}Livros Disponíveis</h1>
-
-    .rating-stars {
-      color: #ccc;
-      font-size: 1.1em;
-      margin-bottom: 5px;
-    }
-
-    .rating-stars .filled {
-      color: #f8d64e; 
-    }
-
-    .rating-stars small {
-      color: #777;
-      font-size: 0.8em;
-      vertical-align: middle;
-      margin-left: 5px;
-    }
-    /* CSS ADICIONADO: 
-      Para o 'Ano' e 'Preço' ficarem lado a lado.
-    */
-    .book-details {
-      display: flex;
-      justify-content: center; /* Centraliza os itens */
-      gap: 20px; /* Espaço entre "Ano" e "Preço" */
-      margin-top: 10px;
-      margin-bottom: 10px;
-      font-size: 0.9em;
-      color: #000000;
-    }
-
-    .book-detail-item strong {
-      color: #000000; /* Rótulo com cor mais suave */
-    }
-
-    .book-detail-item span {
-      font-weight: bold; /* Valor em negrito */
-    }
-  </style>
-
-  <nav style="text-align: center; margin-bottom: 25px; font-size: 1.1em;">
-    <strong style="color:#800020;">Filtrar por Gênero:</strong>
-    <ul style="list-style: none; padding: 0; margin-top: 10px;">
-      
-      <li style="display: inline-block; margin: 0 8px;">
-        <a href="{% url 'library:list' %}" style="text-decoration: none; color: #333; padding: 5px 10px; background-color: #f0f0f0; border-radius: 5px;">
-          Todos
-        </a>
-      </li>
-
-      {% for genero in todos_generos %}
-        <li style="display: inline-block; margin: 0 8px;">
-          <a href="{% url 'library:lista_por_genero' genero.slug %}" style="text-decoration: none; color: #333; padding: 5px 10px; background-color: #f0f0f0; border-radius: 5px;">
-            {{ genero.name }}
-          </a>
-        </li>
-      {% endfor %}
-      {% for aval in todos_aval %}
-        <li style="display: inline-block; margin: 0 8px;">
-          <a href="{% url 'library:lista_por_avaliacao' aval.slug %}" style="text-decoration: none; color: #333; padding: 5px 10px; background-color: #f0f0f0; border-radius: 5px;">
-            {{ aval.rating }}
-          </a>
-        </li>
-      {% endfor %}
-    </ul>
-  </nav>
-
-  
-
-
-  {% if genero_atual %}
-    <h2 style="color:#800020; text-align:center; margin-bottom: 20px;">Mostrando: {{ genero_atual.name }}</h2>
-  {% elif aval_atual %}
-    <h2 style="color:#800020; text-align:center; margin-bottom: 20px;">Mostrando: {{ aval_atual.slug }} estrelas</h2>
+<style>
+    /* --- RESET BÁSICO PARA OCUPAR TELA TODA --- */
+    * { box-sizing: border-box; }
     
-  {% else%}
-    <h2 style="color:#800020; text-align:center; margin-bottom: 20px;">Mostrando Todos os Livros</h2>
-  {% endif %}
+    /* Garante que o corpo da página não tenha margens brancas extras */
+    body {
+        margin: 0;
+        padding: 0;
+        background-color: #f4f6f8; /* Fundo cinza bem suave */
+        overflow-x: hidden;
+    }
 
+    /* --- HEADER VERMELHO (OCUPA 100%) --- */
+    .header-full {
+        background-color: #800020;
+        color: white;
+        padding: 20px 20px;
+        text-align: center;
+        width: 100%;
+    }
 
+    .search-input {
+        padding: 12px 20px;
+        width: 100%;
+        max-width: 600px;
+        border-radius: 30px;
+        border: none;
+        outline: none;
+        font-size: 1rem;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
 
-  <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap:20px; padding:20px;">
-    {% for book in books %}
-      <article class="book" style="border:1px solid #ddd; border-radius:8px; padding:15px; background:#fff; box-shadow:0 2px 5px rgba(0,0,0,0.1); text-align:center;">
+    /* --- LAYOUT PRINCIPAL (GRID DE 2 COLUNAS) --- */
+    .layout-grid {
+        display: grid;
+        /* AQUI ESTÁ O SEGREDO: 
+           280px para a barra lateral
+           1fr (uma fração) para o resto da tela (livros)
+        */
+        grid-template-columns: 280px 1fr;
+        min-height: calc(100vh - 150px); /* Altura mínima para preencher a tela */
+    }
+
+    /* --- COLUNA 1: SIDEBAR --- */
+    .sidebar {
+        background: #ffffff;
+        border-right: 1px solid #e0e0e0; /* Linha separadora fina */
+        padding: 30px 20px;
+    }
+
+    .sidebar-title {
+        color: #800020;
+        font-size: 0.95rem;
+        font-weight: 800;
+        text-transform: uppercase;
+        margin-bottom: 15px;
+        letter-spacing: 1px;
+    }
+
+    /* Botões de Gênero (Estilo Clean) */
+    .genre-link {
+        display: block;
+        padding: 8px 12px;
+        margin-bottom: 5px;
+        color: #555;
+        text-decoration: none;
+        border-radius: 6px;
+        transition: all 0.2s;
+        font-size: 0.9rem;
+    }
+
+    .genre-link:hover {
+        background-color: #fde8e8; /* Fundo rosa bem claro */
+        color: #800020;
+        font-weight: bold;
+    }
+
+    /* Lista de Estrelas */
+    .rating-item {
+        display: flex;
+        align-items: center;
+        padding: 6px 0;
+        color: #666;
+        text-decoration: none;
+        font-size: 0.9rem;
+    }
+    .rating-item:hover { color: #800020; }
+
+    /* --- COLUNA 2: ÁREA DOS LIVROS --- */
+    .content-area {
+        padding: 10px 30px; /* Espaço interno */
+    }
+
+    .top-bar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 5px;
+        border-bottom: 1px solid #ddd;
+        padding-bottom: 5px;
+    }
+
+    .page-title {
+        margin: 0;
+        color: #333;
+        font-size: 1.6rem; /* Levemente menor para não ocupar tanto espaço */
+        font-weight: 700;
+        line-height: 1.1;
+    }
+
+    /* GRID DOS CARDS (RESPONSIVO E BONITO) */
+    .books-grid {
+        display: grid;
+        /* Preenche a tela automaticamente com quantos cards couberem */
+        grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+        gap: 25px;
+    }
+
+    /* O CARD EM SI */
+    .book-card {
+        background: white;
+        border-radius: 10px;
+        padding: 15px;
+        text-align: center;
+        transition: transform 0.2s, box-shadow 0.2s;
+        border: 1px solid #eee;
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+    }
+
+    .book-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 10px 20px rgba(0,0,0,0.08);
+        border-color: #800020;
+    }
+
+    .card-img-container {
+        height: 280px; /* Altura fixa para a imagem */
+        margin-bottom: 15px;
+        overflow: hidden;
+        border-radius: 6px;
+    }
+
+    .card-img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover; /* Corta a imagem para caber sem esticar */
+    }
+
+    .card-title {
+        font-size: 1.1rem;
+        margin: 0 0 5px 0;
+        color: #333;
+        font-weight: bold;
+        text-decoration: none;
+        line-height: 1.3;
+    }
+
+    .card-price {
+        font-size: 1.2rem;
+        color: #800020;
+        font-weight: bold;
+        margin-bottom: 10px;
+    }
+
+    .btn-add {
+        margin-top: auto; /* Joga o botão para o final do card */
+        background-color: #800020;
+        color: white;
+        padding: 10px;
+        border-radius: 6px;
+        text-decoration: none;
+        font-weight: 600;
+        transition: background 0.3s;
+    }
+    .btn-add:hover { background-color: #5c0017; }
+
+    /* Ajuste para Celular */
+    @media (max-width: 768px) {
+        .layout-grid { grid-template-columns: 1fr; } /* Vira uma coluna só */
+        .sidebar { border-right: none; border-bottom: 1px solid #ddd; }
+    }
+</style>
+
+<div class="header-full">
+    <h2 style="margin-top:0; margin-bottom: 15px;">Encontre sua próxima leitura</h2>
+    <input type="text" placeholder="Pesquisar por título, autor ou ISBN..." class="search-input">
+</div>
+
+<div class="layout-grid">
+
+    <aside class="sidebar">
         
-        {% if book.banner.url %}
-          <img src="{{ book.banner.url }}" alt="{{ book.title }}" style="width:120px; height:auto; margin-bottom:10px;">
-        {% else %}
-        {% endif %}
-        
-        <h2 style="color:#800020; font-size:1.2rem; margin-bottom:10px;">
-          <a href="{% url 'library:detail' book.slug %}" style="color:#800020; text-decoration:none;">
-            {{ book.title }}
-          </a>
-        </h2>
-                
-      
-        
-        <div class="book-details">
-          
-          <div class="book-detail-item">
-            <strong>Preço:</strong> 
-            <span>R$ {{ book.price|default:"29.90"|floatformat:2 }}</span>
-          </div>
+        <div style="margin-bottom: 30px;">
+            <a href="{% url 'library:list' %}" style="display:block; text-align:center; border: 2px solid #800020; color: #800020; padding: 8px; border-radius: 6px; text-decoration: none; font-weight: bold;">
+                Limpar Filtros
+            </a>
         </div>
 
-
-        <div class="rating-stars">
-          {% with rating=book.rating|default:0 %}
-            <span class="{% if rating >= 1 %}filled{% endif %}">★</span>
-            <span class="{% if rating >= 2 %}filled{% endif %}">★</span>
-            <span class="{% if rating >= 3 %}filled{% endif %}">★</span>
-            <span class="{% if rating >= 4 %}filled{% endif %}">★</span>
-            <span class="{% if rating >= 5 %}filled{% endif %}">★</span>
-            
-            {% if rating == 0 %}
-              <small>(Nenhuma avaliação)</small>
-            {% endif %}
-          {% endwith %}
+        <div style="margin-bottom: 30px;">
+            <div class="sidebar-title">Categorias</div>
+            {% for genero in todos_generos %}
+                <a href="{% url 'library:lista_por_genero' genero.slug %}" class="genre-link">
+                    {{ genero.name }}
+                </a>
+            {% endfor %}
         </div>
-        
-        <small>Adicionado em {{ book.creationdate }}</small></br>
-        
-        <a href="{% url 'library:add_to_wishlist' book.id %}" 
-           style="display:inline-block; margin-top:10px; padding:8px 12px; background:#800020; color:white; text-decoration:none; border-radius:5px;">
-           Adicionar à Lista de Desejos
-        </a>
-      
-      </article>
 
-    {% empty %}
-      <p style="text-align:center; color:#555;">Nenhum livro encontrado.</p>
-    {% endfor %}
+        <div>
+            <div class="sidebar-title">Avaliação</div>
+            {% for aval in todos_aval %}
+                <a href="{% url 'library:lista_por_avaliacao' aval.slug %}" class="rating-item">
+                    <span style="color: #f8d64e; margin-right: 8px; font-size:1.2rem">★</span> 
+                    {{ aval.rating }} Estrelas
+                </a>
+            {% endfor %}
+        </div>
 
-  </div>
-  
+    </aside>
+
+    <main class="content-area">
+        
+        <div class="top-bar">
+            <div>
+                {% if genero_atual %}
+                    <h1 class="page-title">Gênero: {{ genero_atual.name }}</h1>
+                {% elif aval_atual %}
+                    <h1 class="page-title">Melhores Avaliados ({{ aval_atual.slug }}★)</h1>
+                {% else %}
+                    <h1 class="page-title">Todos os Livros</h1>
+                {% endif %}
+                <span style="color: #777; font-size: 0.9rem;">{{ books.count }} resultados</span>
+            </div>
+        </div>
+
+        <div class="books-grid">
+            {% for book in books %}
+                <article class="book-card">
+                    
+                    <div class="card-img-container">
+                        <a href="{% url 'library:detail' book.slug %}">
+                            {% if book.banner %}
+                                <img src="{{ book.banner.url }}" alt="{{ book.title }}" class="card-img">
+                            {% else %}
+                                <img src="https://via.placeholder.com/300x400?text=Capa" class="card-img">
+                            {% endif %}
+                        </a>
+                    </div>
+
+                    <a href="{% url 'library:detail' book.slug %} " class="card-title">
+                        {{ book.title }}
+                    </a>
+                    
+                    <div style="color: #f8d64e; margin: 5px 0;">
+                        {% with rating=book.rating|default:0 %}
+                            {% if rating >= 1 %}★{% else %}☆{% endif %}
+                            {% if rating >= 2 %}★{% else %}☆{% endif %}
+                            {% if rating >= 3 %}★{% else %}☆{% endif %}
+                            {% if rating >= 4 %}★{% else %}☆{% endif %}
+                            {% if rating >= 5 %}★{% else %}☆{% endif %}
+                        {% endwith %}
+                    </div>
+
+                    <div class="card-price">
+                        R$ {{ book.price|default:"29.90"|floatformat:2 }}
+                    </div>
+
+                    <a href="{% url 'library:add_to_wishlist' book.id %}" class="btn-add">
+                        Adicionar aos Desejos
+                    </a>
+
+                </article>
+            {% empty %}
+                <div style="grid-column: 1/-1; text-align: center; padding: 50px;">
+                    <h3>Nenhum livro encontrado :(</h3>
+                </div>
+            {% endfor %}
+        </div>
+
+    </main>
+
+</div>
+
 {% endblock %}

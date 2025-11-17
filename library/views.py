@@ -1,16 +1,20 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from .models import Book, Wishlist, Genre, ReviewRating,RatingSearch
+from .models import Book, Wishlist, Genre, ReviewRating, RatingSearch
 from django.contrib.auth.decorators import login_required
 from .forms import reviewForm
+from .models import Book
 
+# --- AQUI ESTÁ A MÁGICA ---
+# O @login_required bloqueia quem não tem conta logada.
+# Como seu settings já aponta para 'users:login', o redirecionamento será automático.
 
+@login_required
 def booklist(request, genero_slug=None, rating_slug=None):
     genero_atual = None
     aval_atual = None
     todos_generos = Genre.objects.all()
     todos_aval = RatingSearch.objects.all()
-
-   
+    livros_destaque = Book.objects.all().order_by('-creationdate')[:5]
 
     if genero_slug:
         genero_atual = get_object_or_404(Genre, slug=genero_slug)
@@ -23,6 +27,7 @@ def booklist(request, genero_slug=None, rating_slug=None):
 
     context = {
         'books': books,
+        'livros_destaque': livros_destaque,
         'todos_generos': todos_generos,
         'genero_atual': genero_atual,
         'todos_aval': todos_aval,
@@ -31,16 +36,18 @@ def booklist(request, genero_slug=None, rating_slug=None):
     return render(request, 'booklist.html', context)
 
 
+@login_required
 def bookpage(request, slug):
-    # Substitui get() por filter().first() para evitar MultipleObjectsReturned
+    # Substitui get() por filter().first() para evitar erros
     book = Book.objects.filter(slug=slug).first()
     if not book:
-        return render(request, '404.html', status=404)  # ou raise Http404("Livro não encontrado")
+        return render(request, '404.html', status=404)
     
     return render(request, 'bookpage.html', {'book': book})
 
 
 def addbook(request):
+    # Se quiser que apenas usuários logados adicionem livros, coloque @login_required aqui também
     return render(request, 'addbook.html', {})
 
 
@@ -70,18 +77,16 @@ def remove_from_wishlist(request, book_id):
     return redirect('library:wishlist')
 
 
+    
 @login_required
 def submit_review(request, book_id):
     url = request.META.get('HTTP_REFERER', '/')
     if request.method == 'POST':
-        # Pega a review do usuário para esse livro, se existir
         review = ReviewRating.objects.filter(book__id=book_id, user=request.user).first()
         
         if review:
-            # Atualiza review existente
             form = reviewForm(request.POST, instance=review)
         else:
-            # Cria nova review
             form = reviewForm(request.POST)
 
         if form.is_valid():

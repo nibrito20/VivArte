@@ -5,38 +5,233 @@
 {% endblock %}
 
 {% block content %}
-<section class="book-detail">
-    <div class="book-banner">
-        <img 
-            class="banner"
-            src="{{ book.banner.url }}"
-            alt="{{ book.title }}"
-        />
-    </div>
 
-    <div class="book-info">
-        <h1 class="book-title">{{ book.title }}</h1>
-        <p class="book-date">{{ book.creationdate }}</p>
-        <p class="book-description">{{ book.details }}</p>
+<style>
+    /* --- CONFIGURAÇÕES DE PÁGINA --- */
+    body {
+        background-color: #f4f6f8; /* Fundo suave */
+    }
+
+    .book-detail-container {
+        max-width: 1000px;
+        margin: 40px auto;
+        background: #fff;
+        border-radius: 12px;
+        box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+    }
+
+    /* --- SEÇÃO SUPERIOR (LIVRO + DETALHES) --- */
+    .book-top-section {
+        display: flex;
+        padding: 40px;
+        gap: 40px;
+    }
+
+    /* Coluna da Esquerda (Capa) */
+    .book-banner {
+        flex-shrink: 0;
+        width: 300px;
+    }
+
+    .banner {
+        width: 100%;
+        height: auto;
+        border-radius: 8px;
+        box-shadow: 0 15px 30px rgba(0,0,0,0.2); /* Sombra de livro realista */
+        object-fit: cover;
+        display: block;
+    }
+
+    /* Coluna da Direita (Infos) */
+    .book-info {
+        flex-grow: 1;
+    }
+
+    .book-title {
+        font-family: 'Georgia', serif; /* Fonte clássica para título */
+        font-size: 2.5rem;
+        color: #800020; /* Vinho */
+        margin: 0 0 10px 0;
+        line-height: 1.2;
+    }
+
+    .book-date {
+        font-size: 0.9rem;
+        color: #888;
+        margin-bottom: 25px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        border-bottom: 1px solid #eee;
+        padding-bottom: 15px;
+    }
+
+    .book-description {
+        font-size: 1.1rem;
+        line-height: 1.8;
+        color: #444;
+        text-align: justify;
+    }
+
+    /* --- SEÇÃO DE AVALIAÇÃO --- */
+    .review-section {
+        background-color: #fafafa; /* Fundo levemente diferente */
+        padding: 40px;
+        border-top: 1px solid #eee;
+    }
+
+    .review-form {
+        max-width: 700px;
+        margin: 0 auto; /* Centraliza o formulário */
+    }
+
+    .review-form h2 {
+        color: #333;
+        margin-bottom: 20px;
+        font-size: 1.5rem;
+        text-align: center;
+    }
+
+    /* ESTRELAS (CSS Mágico para funcionar bonito) */
+    .rating-group {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 20px;
+        gap: 10px;
+    }
+    
+    .rating-label { font-weight: bold; color: #555; }
+
+    .rate {
+        display: flex;
+        flex-direction: row-reverse; /* Importante para a lógica funcionar */
+        height: 46px;
+        padding: 0 10px;
+    }
+    .rate:not(:checked) > input {
+        position: absolute;
+        top: -9999px;
+    }
+    .rate:not(:checked) > label {
+        float: right;
+        width: 1em;
+        overflow: hidden;
+        white-space: nowrap;
+        cursor: pointer;
+        font-size: 35px;
+        color: #ccc;
+    }
+    .rate:not(:checked) > label:before {
+        content: '★ ';
+    }
+    .rate > input:checked ~ label {
+        color: #ffc700; /* Dourado */
+    }
+    .rate:not(:checked) > label:hover,
+    .rate:not(:checked) > label:hover ~ label {
+        color: #deb217; /* Dourado ao passar mouse */
+    }
+
+    /* Inputs do Formulário */
+    .form-group { margin-bottom: 20px; }
+    
+    .form-group label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: bold;
+        color: #555;
+    }
+
+    .form-control {
+        width: 100%;
+        padding: 12px 15px;
+        border: 1px solid #ddd;
+        border-radius: 6px;
+        font-size: 1rem;
+        background: #fff;
+        transition: border-color 0.3s;
+    }
+    .form-control:focus {
+        border-color: #800020;
+        outline: none;
+    }
+
+    /* Botão de Enviar */
+    .form-actions { text-align: center; }
+
+    .btn-submit {
+        background-color: #800020;
+        color: white;
+        padding: 12px 40px;
+        border: none;
+        border-radius: 30px;
+        font-size: 1.1rem;
+        font-weight: bold;
+        cursor: pointer;
+        transition: background 0.3s, transform 0.2s;
+    }
+
+    .btn-submit:hover {
+        background-color: #5a0016;
+        transform: translateY(-2px);
+    }
+
+    /* Responsivo */
+    @media (max-width: 768px) {
+        .book-top-section { flex-direction: column; align-items: center; }
+        .book-banner { width: 100%; max-width: 300px; margin-bottom: 20px; }
+        .book-title { text-align: center; }
+        .book-date { text-align: center; }
+    }
+</style>
+
+<section class="book-detail-container">
+    
+    <div class="book-top-section">
+        <div class="book-banner">
+            {% if book.banner %}
+                <img class="banner" src="{{ book.banner.url }}" alt="{{ book.title }}" />
+            {% else %}
+                <div style="width:100%; height:400px; background:#eee; display:flex; align-items:center; justify-content:center; color:#aaa; border-radius:8px;">
+                    Sem Capa
+                </div>
+            {% endif %}
+        </div>
+
+        <div class="book-info">
+            <h1 class="book-title">{{ book.title }}</h1>
+                Adicionado em: {{ book.creationdate|date:"d" }} de {{ book.creationdate|date:"F" }} de {{ book.creationdate|date:"Y" }}
+            <div class="book-description">
+                {{ book.details|linebreaks }}
+            </div>
+        </div>
     </div>
 
     {% if user.is_authenticated %}
     <div class="review-section">
         <form action="{% url 'library:submit_review' book.id %}" method="POST" class="review-form">
             {% csrf_token %}
-            <h2>Deixe sua avaliação</h2>
+            
+            <h2>O que você achou deste livro?</h2>
 
             <div class="rating-group">
-                <label class="rating-label">Sua nota:</label>
+                <span class="rating-label">Sua nota:</span>
                 <div class="rate">
                     <input type="radio" name="rating" id="rating5" value="5" required />
                     <label for="rating5" title="5 estrelas"></label>
+                    
                     <input type="radio" name="rating" id="rating4" value="4" required />
                     <label for="rating4" title="4 estrelas"></label>
+                    
                     <input type="radio" name="rating" id="rating3" value="3" required />
                     <label for="rating3" title="3 estrelas"></label>
+                    
                     <input type="radio" name="rating" id="rating2" value="2" required />
                     <label for="rating2" title="2 estrelas"></label>
+                    
                     <input type="radio" name="rating" id="rating1" value="1" required />
                     <label for="rating1" title="1 estrela"></label>
                 </div>
@@ -44,19 +239,20 @@
 
             <div class="form-group">
                 <label for="subject">Título da avaliação:</label>
-                <input type="text" id="subject" name="subject" class="form-control" placeholder="Ex: Incrível leitura!">
+                <input type="text" id="subject" name="subject" class="form-control" placeholder="Ex: Leitura fascinante!">
             </div>
 
             <div class="form-group">
                 <label for="review">Comentário:</label>
-                <textarea id="review" name="review" rows="4" class="form-control" placeholder="Compartilhe sua opinião sobre o livro..."></textarea>
+                <textarea id="review" name="review" rows="5" class="form-control" placeholder="Escreva aqui sua opinião detalhada..."></textarea>
             </div>
 
             <div class="form-actions">
-                <input type="submit" value="Enviar Avaliação" class="btn-submit">
+                <input type="submit" value="Publicar Avaliação" class="btn-submit">
             </div>
         </form>
     </div>
     {% endif %}
+
 </section>
 {% endblock content %}

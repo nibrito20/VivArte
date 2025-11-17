@@ -16,8 +16,7 @@
     <header>
         <nav>
             <ul class="nav-list">
-                <li><a href="/" class="nav-link">Inicio</a></li>
-                <li><a href="{% url 'library:list' %}" class="nav-link">Biblioteca</a></li>
+                <li><a href="{% url 'library:list' %}" class="nav-link">Início</a></li>
                 {% if user.is_authenticated %}
             <li>
                 <a href="{% url 'library:wishlist' %}" class="nav-link" title="Lista de Desejos">
@@ -37,7 +36,6 @@
             </div>
             <ul class="nav-list">
                 {% if user.is_authenticated %}
-                    <li><a href="" class="nav-link">Vender</a></li>
                     <li><form action="{% url 'users:logout' %}" method="post" class="nav-form"> {% csrf_token %} <button class="nav-button" >Sair</button></form></li>
                     <li>
                         <a href="{% url 'users:account' %}" class="nav-link" title="Meu Perfil">

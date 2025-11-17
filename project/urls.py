@@ -23,7 +23,7 @@ from .deploy_views import deploy_webhook
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', views.homepage ),
+    path('', include('library.urls')),
     path('about/', views.about),
     path('library/', include('library.urls')),
     path('users/', include('users.urls')),
