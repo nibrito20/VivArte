@@ -26,7 +26,7 @@ def login_view(request):
             if next_url:
                 return redirect(next_url)  # Redireciona para a URL original que o usuário queria acessar
             else:
-                return redirect('library:home')  # Redireciona para a página principal (home ou qualquer outra página que você defina)
+                return redirect('library:list')  # Redireciona para a página principal (home ou qualquer outra página que você defina)
     else:
         form = AuthenticationForm()
     

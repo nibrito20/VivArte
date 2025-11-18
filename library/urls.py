@@ -6,7 +6,7 @@ app_name = 'library'
 urlpatterns = [
     # --- MUDANÇA PRINCIPAL AQUI ---
     # 1. A Página Inicial (Raiz do site) agora chama a view 'index' (que carrega o home.html)
-    path('', views.booklist, name='list'),
+    path('', views.booklist, name='home'),
 
     # 2. A Lista de Livros agora fica em uma URL específica '/livros/'
     # Assim não mistura a capa do site com a lista completa.

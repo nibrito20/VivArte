@@ -25,7 +25,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('library.urls')),
     path('about/', views.about),
-    path('library/', include('library.urls')),
     path('users/', include('users.urls')),
     path('webhook/deploy/', deploy_webhook, name='deploy_webhook'),
 ]

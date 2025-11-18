@@ -19,14 +19,14 @@
                 <li><a href="{% url 'library:list' %}" class="nav-link">Início</a></li>
                 {% if user.is_authenticated %}
             <li>
-                <a href="{% url 'library:wishlist' %}" class="nav-link" title="Lista de Desejos">
-                    <i class="fa fa-shopping-cart"></i>
+                <a href="{% url 'library:wishlist' %}" class="nav-link">
+                    Lista de desejo
                 </a>
             </li>
         {% else %}
             <li>
-                <a href="{% url 'users:login' %}" class="nav-link" title="Lista de Desejos">
-                    <i class="fa fa-shopping-cart"></i>
+                <a href="{% url 'users:login' %}" class="nav-link">
+                    Lista de desejo
                 </a>
             </li>
         {% endif %}
