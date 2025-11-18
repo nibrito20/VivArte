@@ -114,20 +114,22 @@ def adicionar_ao_carrinho(request, book_id):
         item.quantity += 1
         item.save()
 
-    return redirect('ver_carrinho')
+    return redirect('library:ver_carrinho')
 
 @login_required
 def remover_item_do_carrinho(request, item_id):
     item = get_object_or_404(Carrinho, id=item_id, user=request.user)
     item.delete()
-    return redirect('ver_carrinho')
+    return redirect('library:ver_carrinho')
 
+@login_required
 def aumentar_quantidade_itens_do_carrinho(request, item_id):
     item = get_object_or_404(Carrinho, id=item_id, user=request.user)
     item.quantity += 1
     item.save()
-    return redirect('ver_carrinho')
+    return redirect('library:ver_carrinho')
 
+@login_required
 def diminuir_quantidade_itens_do_carrinho(request, item_id):
     item = get_object_or_404(Carrinho, id=item_id, user=request.user)
 
@@ -137,4 +139,4 @@ def diminuir_quantidade_itens_do_carrinho(request, item_id):
     else:
         item.delete()
 
-    return redirect('ver_carrinho')
+    return redirect('library:ver_carrinho')

@@ -5,7 +5,7 @@ from .models import Book, Genre, ReviewRating, RatingSearch
 class BookAdmin(admin.ModelAdmin):
     fieldsets = [
         ('Informações Principais', {
-            'fields': ['title', 'details', 'slug', 'banner']
+            'fields': ['title', 'details', 'slug', 'banner', 'price']
         }),
         ('Categorização e Avaliação', {
             'fields': ['generos', 'rating']
@@ -13,7 +13,6 @@ class BookAdmin(admin.ModelAdmin):
     ]
     filter_horizontal = ('generos','rating')
 
-    # ✅ Mostra miniatura da capa na listagem
     list_display = ('title', 'cover_preview', 'slug')
     
     def cover_preview(self, obj):
@@ -22,7 +21,6 @@ class BookAdmin(admin.ModelAdmin):
         return "-"
     cover_preview.short_description = 'Capa'
 
-# Registra os modelos
 admin.site.register(Genre) 
 admin.site.register(Book, BookAdmin) 
 admin.site.register(ReviewRating)
