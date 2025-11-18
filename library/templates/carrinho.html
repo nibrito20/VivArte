@@ -1,0 +1,163 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+    Seu Carrinho
+{% endblock %}
+
+{% block content %}
+
+<style>
+    body {
+        background-color: #f4f6f8;
+    }
+
+    .cart-container {
+        max-width: 1000px;
+        margin: 40px auto;
+        background: #fff;
+        border-radius: 12px;
+        box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+        padding: 40px;
+    }
+
+    .cart-title {
+        font-family: 'Georgia', serif;
+        font-size: 2.3rem;
+        color: #800020;
+        margin-bottom: 20px;
+        text-align: center;
+    }
+
+    .cart-item {
+        display: flex;
+        gap: 25px;
+        margin-bottom: 25px;
+        padding-bottom: 20px;
+        border-bottom: 1px solid #eee;
+        align-items: center;
+    }
+
+    .item-banner {
+        width: 120px;
+        height: 170px;
+        border-radius: 6px;
+        object-fit: cover;
+        box-shadow: 0 8px 18px rgba(0,0,0,0.15);
+    }
+
+    .item-info {
+        flex-grow: 1;
+    }
+
+    .item-title {
+        font-size: 1.4rem;
+        color: #333;
+        margin: 0;
+        font-family: 'Georgia', serif;
+    }
+
+    .item-price {
+        color: #800020;
+        font-weight: bold;
+        margin-top: 5px;
+    }
+
+    .quantity-controls {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .quantity-controls a {
+        display: inline-block;
+        padding: 6px 14px;
+        border-radius: 6px;
+        background: #f2f2f2;
+        border: 1px solid #ccc;
+        text-decoration: none;
+        font-size: 16px;
+        color: #333;
+        transition: background 0.2s;
+    }
+
+    .quantity-controls a:hover {
+        background: #e2e2e2;
+    }
+
+    .remove-btn {
+        color: #b00000;
+        text-decoration: none;
+        font-weight: bold;
+        transition: color 0.2s;
+    }
+
+    .remove-btn:hover {
+        color: #800000;
+    }
+
+    .cart-total {
+        margin-top: 35px;
+        font-size: 1.6rem;
+        font-weight: bold;
+        text-align: center;
+        color: #800020;
+    }
+
+    .empty-cart {
+        text-align: center;
+        font-size: 1.3rem;
+        color: #666;
+        padding: 40px 0;
+    }
+
+</style>
+
+<div class="cart-container">
+
+    <h1 class="cart-title">Seu Carrinho</h1>
+
+    {% if itens %}
+
+        {% for item in itens %}
+        <div class="cart-item">
+
+            {% if item.book.banner %}
+                <img src="{{ item.book.banner.url }}" class="item-banner" alt="{{ item.book.title }}">
+            {% else %}
+                <div style="width:120px; height:170px; background:#eee; border-radius:6px; display:flex; align-items:center; justify-content:center; color:#aaa;">
+                    Sem Capa
+                </div>
+            {% endif %}
+
+            <div class="item-info">
+                <p class="item-title">{{ item.book.title }}</p>
+
+                <p class="item-price">
+                    Preço: R$ {{ item.book.price }}
+                </p>
+
+                <div class="quantity-controls">
+                    <a href="{% url 'library:aumentar_quantidade' item.id %}">+</a>
+                    <span>Qtd: {{ item.quantity }}</span>
+                    <a href="{% url 'library:diminuir_quantidade' item.id %}">-</a>
+                </div>
+            </div>
+
+            <a href="{% url 'library:remover_item' item.id %}" class="remove-btn">
+                Remover
+            </a>
+
+        </div>
+        {% endfor %}
+
+        <div class="cart-total">
+            Total: R$ {{ total }}
+        </div>
+
+    {% else %}
+        <p class="empty-cart">Seu carrinho está vazio 😕</p>
+    {% endif %}
+
+</div>
+
+{% endblock %}

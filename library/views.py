@@ -1,14 +1,9 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from .models import Book, Wishlist, Genre, ReviewRating, RatingSearch
+from .models import Book, Wishlist, Genre, ReviewRating, RatingSearch, Carrinho
 from django.contrib.auth.decorators import login_required
 from .forms import reviewForm
 from .models import Book
 
-# --- AQUI ESTÁ A MÁGICA ---
-# O @login_required bloqueia quem não tem conta logada.
-# Como seu settings já aponta para 'users:login', o redirecionamento será automático.
-
-@login_required
 def booklist(request, genero_slug=None, rating_slug=None):
     genero_atual = None
     aval_atual = None
@@ -36,9 +31,7 @@ def booklist(request, genero_slug=None, rating_slug=None):
     return render(request, 'booklist.html', context)
 
 
-@login_required
 def bookpage(request, slug):
-    # Substitui get() por filter().first() para evitar erros
     book = Book.objects.filter(slug=slug).first()
     if not book:
         return render(request, '404.html', status=404)
@@ -47,7 +40,6 @@ def bookpage(request, slug):
 
 
 def addbook(request):
-    # Se quiser que apenas usuários logados adicionem livros, coloque @login_required aqui também
     return render(request, 'addbook.html', {})
 
 
@@ -96,3 +88,53 @@ def submit_review(request, book_id):
             data.save()
         
         return redirect(url)
+    
+@login_required   
+def ver_carrinho(request):
+    itens = Carrinho.objects.filter(user=request.user)
+
+    total = sum(item.book.price * item.quantity for item in itens)
+
+    context = {
+        'itens': itens,
+        'total': total
+    }
+    return render(request, 'carrinho.html', context)
+
+@login_required
+def adicionar_ao_carrinho(request, book_id):
+    livro = get_object_or_404(Book, id=book_id)
+
+    item, created = Carrinho.objects.get_or_create(
+        user=request.user,
+        book=livro,
+    )
+
+    if not created:
+        item.quantity += 1
+        item.save()
+
+    return redirect('ver_carrinho')
+
+@login_required
+def remover_item_do_carrinho(request, item_id):
+    item = get_object_or_404(Carrinho, id=item_id, user=request.user)
+    item.delete()
+    return redirect('ver_carrinho')
+
+def aumentar_quantidade_itens_do_carrinho(request, item_id):
+    item = get_object_or_404(Carrinho, id=item_id, user=request.user)
+    item.quantity += 1
+    item.save()
+    return redirect('ver_carrinho')
+
+def diminuir_quantidade_itens_do_carrinho(request, item_id):
+    item = get_object_or_404(Carrinho, id=item_id, user=request.user)
+
+    if item.quantity > 1:
+        item.quantity -= 1
+        item.save()
+    else:
+        item.delete()
+
+    return redirect('ver_carrinho')

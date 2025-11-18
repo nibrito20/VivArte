@@ -207,6 +207,14 @@
             <div class="book-description">
                 {{ book.details|linebreaks }}
             </div>
+            {% if user.is_authenticated %}
+            <form action="{% url 'library:adicionar_ao_carrinho' book.id %}" method="post" style="margin-top:20px;">
+                {% csrf_token %}
+                <button type="submit" style="background-color:#800020;color:white;padding:10px 30px;border:none;border-radius:8px;cursor:pointer;font-weight:bold;">Adicionar ao Carrinho</button>
+            </form>
+            {% else %}
+            <p style="margin-top:20px;"><a href="{% url 'login' %}">Faça login</a> para adicionar ao carrinho.</p>
+            {% endif %}
         </div>
     </div>
 

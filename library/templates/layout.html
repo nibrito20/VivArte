@@ -23,11 +23,19 @@
                     Lista de desejo
                 </a>
             </li>
+            <li>
+                <a href="{% url 'library:ver_carrinho' %}" class="nav-link">
+                    Carrinho
+                </a>
+            </li>
         {% else %}
             <li>
                 <a href="{% url 'users:login' %}" class="nav-link">
                     Lista de desejo
                 </a>
+            </li>
+            <li>
+                <a href="{% url 'users:login' %}" class="nav-link">Carrinho</a>
             </li>
         {% endif %}
             </ul>
