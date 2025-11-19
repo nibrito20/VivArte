@@ -213,7 +213,9 @@
                 <button type="submit" style="background-color:#800020;color:white;padding:10px 30px;border:none;border-radius:8px;cursor:pointer;font-weight:bold;">Adicionar ao Carrinho</button>
             </form>
             {% else %}
-            <p style="margin-top:20px;"><a href="{% url 'login' %}">Faça login</a> para adicionar ao carrinho.</p>
+            <p style="margin-top:20px; color:#800020; font-weight:bold;">
+                Faça login para adicionar ao carrinho.
+            </p>
             {% endif %}
         </div>
     </div>
