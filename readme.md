@@ -78,7 +78,6 @@ Nesta entrega, damos continuidade à documentação em Par. Para mais detalhes, 
 #### Screencast do Deploy das Histórias Implementadas
 
 - 🎬 [Clique aqui para acessar o vídeo](https://youtu.be/VrKWUx5uOKg?si=XlYa-4PaE0skhI0j)
-- 👉 [Clique aqui para acessar o link do deploy](https://livraria.pythonanywhere.com)
 
 #### Issue/bug tracker
 
@@ -90,3 +89,7 @@ Nesta entrega, damos continuidade à documentação em Par. Para mais detalhes, 
 #### Teste E2E
 
 - 🎬 [Clique aqui para acessar o vídeo](https://youtu.be/MAYMH_YHVgE)
+
+#### Link da aplicação
+
+- 👉 [Clique aqui para acessar o link do deploy](https://livraria.pythonanywhere.com)
