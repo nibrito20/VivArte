@@ -5,22 +5,30 @@ from .forms import reviewForm
 from .models import Book
 from django.db.models import Q
 from django.utils.text import slugify
+from django.db.models import Avg
 
 def booklist(request, genero_slug=None, rating_slug=None):
     genero_atual = None
     aval_atual = None
     todos_generos = Genre.objects.all()
     todos_aval = RatingSearch.objects.all()
-    livros_destaque = Book.objects.all().order_by('-creationdate')[:5]
+    livros_destaque = Book.objects.annotate(media_notas=Avg('reviewrating__rating')).order_by('-creationdate')[:5]
 
     if genero_slug:
         genero_atual = get_object_or_404(Genre, slug=genero_slug)
-        books = Book.objects.filter(generos__in=[genero_atual]).order_by('-creationdate')
+        books = Book.objects.filter(generos__in=[genero_atual]).annotate(media_notas=Avg('reviewrating__rating')).order_by('-creationdate')
     elif rating_slug:
         aval_atual = get_object_or_404(RatingSearch, slug=rating_slug)
-        books = Book.objects.filter(rating__in=[aval_atual]).order_by('-creationdate')
+        nota_minima = aval_atual.rating 
+        
+        books = Book.objects.annotate(
+            media_notas=Avg('reviewrating__rating')
+        ).filter(
+            media_notas__gte=nota_minima,
+            media_notas__lt=nota_minima + 1
+        ).order_by('-creationdate')
     else:
-        books = Book.objects.all().order_by('-creationdate')
+        books = Book.objects.annotate(media_notas=Avg('reviewrating__rating')).order_by('-creationdate')
 
     query = request.GET.get('q')
     if query:
