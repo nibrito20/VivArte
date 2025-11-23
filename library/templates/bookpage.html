@@ -9,7 +9,7 @@
 <style>
     /* --- CONFIGURAÇÕES DE PÁGINA --- */
     body {
-        background-color: #f4f6f8; /* Fundo suave */
+        background-color: #f4f6f8;
     }
 
     .book-detail-container {
@@ -40,7 +40,7 @@
         width: 100%;
         height: auto;
         border-radius: 8px;
-        box-shadow: 0 15px 30px rgba(0,0,0,0.2); /* Sombra de livro realista */
+        box-shadow: 0 15px 30px rgba(0,0,0,0.2);
         object-fit: cover;
         display: block;
     }
@@ -51,9 +51,9 @@
     }
 
     .book-title {
-        font-family: 'Georgia', serif; /* Fonte clássica para título */
+        font-family: 'Georgia', serif;
         font-size: 2.5rem;
-        color: #800020; /* Vinho */
+        color: #800020;
         margin: 0 0 10px 0;
         line-height: 1.2;
     }
@@ -77,14 +77,14 @@
 
     /* --- SEÇÃO DE AVALIAÇÃO --- */
     .review-section {
-        background-color: #fafafa; /* Fundo levemente diferente */
+        background-color: #fafafa;
         padding: 40px;
         border-top: 1px solid #eee;
     }
 
     .review-form {
         max-width: 700px;
-        margin: 0 auto; /* Centraliza o formulário */
+        margin: 0 auto;
     }
 
     .review-form h2 {
@@ -94,7 +94,7 @@
         text-align: center;
     }
 
-    /* ESTRELAS (CSS Mágico para funcionar bonito) */
+    /* ESTRELAS */
     .rating-group {
         display: flex;
         align-items: center;
@@ -107,7 +107,7 @@
 
     .rate {
         display: flex;
-        flex-direction: row-reverse; /* Importante para a lógica funcionar */
+        flex-direction: row-reverse;
         height: 46px;
         padding: 0 10px;
     }
@@ -128,11 +128,11 @@
         content: '★ ';
     }
     .rate > input:checked ~ label {
-        color: #ffc700; /* Dourado */
+        color: #ffc700;
     }
     .rate:not(:checked) > label:hover,
     .rate:not(:checked) > label:hover ~ label {
-        color: #deb217; /* Dourado ao passar mouse */
+        color: #deb217;
     }
 
     /* Inputs do Formulário */
@@ -179,12 +179,127 @@
         transform: translateY(-2px);
     }
 
-    /* Responsivo */
+
+    .reviews-section {
+        padding: 40px;
+        border-top: 1px solid #eee;
+        background-color: #fff;
+    }
+
+    .reviews-container {
+        max-width: 700px;
+        margin: 0 auto;
+    }
+
+    .reviews-title {
+        color: #333;
+        margin-bottom: 30px;
+        font-size: 1.5rem;
+        text-align: center;
+    }
+
+    .review-item {
+        background: #f9f9f9;
+        border-radius: 8px;
+        padding: 25px;
+        margin-bottom: 20px;
+        border-left: 4px solid #800020;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .review-item:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+
+    .review-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        margin-bottom: 15px;
+    }
+
+    .review-info {
+        flex-grow: 1;
+    }
+
+    .review-subject {
+        margin: 0 0 5px 0;
+        color: #333;
+        font-size: 1.2rem;
+    }
+
+    .review-meta {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .review-stars {
+        color: #ffc700;
+        font-size: 1.1rem;
+        letter-spacing: 2px;
+    }
+
+    .review-rating {
+        color: #666;
+        font-size: 0.9rem;
+    }
+
+    .review-user {
+        text-align: right;
+    }
+
+    .review-username {
+        font-size: 0.85rem;
+        color: #888;
+    }
+
+    .review-date {
+        font-size: 0.8rem;
+        color: #aaa;
+    }
+
+    .review-comment {
+        color: #444;
+        line-height: 1.6;
+    }
+
+    .no-reviews {
+        text-align: center;
+        padding: 40px;
+        color: #666;
+    }
+
+    .no-reviews p {
+        font-size: 1.1rem;
+        margin: 0;
+    }
+
     @media (max-width: 768px) {
-        .book-top-section { flex-direction: column; align-items: center; }
-        .book-banner { width: 100%; max-width: 300px; margin-bottom: 20px; }
-        .book-title { text-align: center; }
-        .book-date { text-align: center; }
+        .book-top-section { 
+            flex-direction: column; 
+            align-items: center; 
+        }
+        .book-banner { 
+            width: 100%; 
+            max-width: 300px; 
+            margin-bottom: 20px; 
+        }
+        .book-title { 
+            text-align: center; 
+        }
+        .book-date { 
+            text-align: center; 
+        }
+        .review-header {
+            flex-direction: column;
+            gap: 10px;
+        }
+        .review-user {
+            text-align: left;
+            width: 100%;
+        }
     }
 </style>
 
@@ -228,6 +343,7 @@
     </div>
 
     {% if user.is_authenticated %}
+   
     <div class="review-section">
         <form action="{% url 'library:submit_review' book.id %}" method="POST" class="review-form">
             {% csrf_token %}
@@ -270,6 +386,54 @@
         </form>
     </div>
     {% endif %}
+
+
+    <div class="reviews-section">
+        <div class="reviews-container">
+            <h2 class="reviews-title">Avaliações dos Leitores</h2>
+
+            {% if reviews %}
+                <div class="reviews-list">
+                    {% for review in reviews %}
+                    <div class="review-item">
+                        <div class="review-header">
+                            <div class="review-info">
+                                <h3 class="review-subject">{{ review.subject }}</h3>
+                                <div class="review-meta">
+                                    <div class="review-stars">
+                                        {% for i in "12345" %}
+                                            {% if forloop.counter <= review.rating %}
+                                                ★
+                                            {% else %}
+                                                ☆
+                                            {% endif %}
+                                        {% endfor %}
+                                    </div>
+                                    <span class="review-rating">{{ review.rating }}/5</span>
+                                </div>
+                            </div>
+                            <div class="review-user">
+                                <div class="review-username">
+                                    por <strong>{{ review.user.username }}</strong>
+                                </div>
+                                <div class="review-date">
+                                    {{ review.created_at|date:"d/m/Y" }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="review-comment">
+                            {{ review.review|linebreaks }}
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <div class="no-reviews">
+                    <p>Seja o primeiro a avaliar este livro!</p>
+                </div>
+            {% endif %}
+        </div>
+    </div>
 
 </section>
 {% endblock content %}

@@ -55,7 +55,14 @@ def bookpage(request, slug):
     if not book:
         return render(request, '404.html', status=404)
     
-    return render(request, 'bookpage.html', {'book': book})
+    reviews = ReviewRating.objects.filter(book=book).order_by('-created_at')[:10]
+    
+    context = {
+        'book': book,
+        'reviews': reviews
+    }
+
+    return render(request, 'bookpage.html', context)
 
 
 def addbook(request):
