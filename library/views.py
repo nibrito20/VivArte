@@ -151,3 +151,9 @@ def diminuir_quantidade_itens_do_carrinho(request, item_id):
         item.delete()
 
     return redirect('library:ver_carrinho')
+
+@login_required
+def finalizar_compra(request):
+    Carrinho.objects.filter(user=request.user).delete()
+
+    return redirect('library:ver_carrinho')

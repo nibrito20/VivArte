@@ -201,12 +201,12 @@
         <div class="cart-total">
             Total: R$ {{ total }}
         </div>
-            <button id="checkout-button" class="checkout-btn">
-        Finalizar Compra
-    </button>
+            <a href="{% url 'library:finalizar_compra' %}" class="checkout-btn">
+                Finalizar Compra
+            </a>
 
     {% else %}
-        <p class="empty-cart">Seu carrinho está vazio 😕</p>
+        <p class="empty-cart">Seu carrinho está vazio</p>
     {% endif %}
 
     <div id="notification">
