@@ -1,6 +1,8 @@
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 from selenium import webdriver
 from selenium.webdriver.common.by import By
+from selenium.webdriver.chrome.service import Service
+from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from django.contrib.auth.models import User
@@ -14,14 +16,15 @@ class VisualizarPerfilTest(StaticLiveServerTestCase):
             first_name='joao',
             last_name='dias',
             email='jpfd@cesar.school',
-            password='senha123'
+            password='nciuw78432rjidscn923r'
         )
 
-        self.browser = webdriver.Edge()
+        service = Service(ChromeDriverManager().install())
+        self.browser = webdriver.Chrome(service=service)
         self.browser.implicitly_wait(5)
 
         self.client = Client()
-        self.client.login(username='joaopfdias', password='senha123')
+        self.client.login(username='joaopfdias', password='nciuw78432rjidscn923r')
 
         self.browser.get(self.live_server_url)
         for key, value in self.client.cookies.items():

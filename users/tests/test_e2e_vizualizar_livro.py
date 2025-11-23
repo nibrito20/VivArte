@@ -1,7 +1,9 @@
 from django.test import LiveServerTestCase
 from selenium import webdriver
 from selenium.webdriver.common.by import By
-from selenium.webdriver.edge.options import Options
+from selenium.webdriver.chrome.service import Service
+from webdriver_manager.chrome import ChromeDriverManager
+from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.action_chains import ActionChains
 from library.models import Book
 from django.utils.text import slugify
@@ -15,10 +17,11 @@ class BookDetailE2ETest(LiveServerTestCase):
             slug=slugify("Harry Potter e a Pedra Filosofal")
         )
 
-        edge_options = Options()
-        edge_options.add_argument("--no-sandbox")
-        edge_options.add_argument("--disable-dev-shm-usage")
-        self.browser = webdriver.Edge(options=edge_options)
+        chrome_options = Options()
+        chrome_options.add_argument("--no-sandbox")
+        chrome_options.add_argument("--disable-dev-shm-usage")
+        service = Service(ChromeDriverManager().install())
+        self.browser = webdriver.Chrome(service=service)
 
     def tearDown(self):
         self.browser.quit()

@@ -1,6 +1,7 @@
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 from selenium import webdriver
-from selenium.webdriver.edge.service import Service
+from selenium.webdriver.chrome.service import Service
+from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.common.by import By
 from django.contrib.auth.models import User
 from library.models import Book
@@ -9,9 +10,7 @@ class SubmitReviewE2ETest(StaticLiveServerTestCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        cls.browser = webdriver.Edge(
-            service=Service(r"C:\Users\jotaa\Downloads\edgedriver_win64\msedgedriver.exe")
-        )
+        cls.browser = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
         cls.browser.implicitly_wait(5)
 
     @classmethod

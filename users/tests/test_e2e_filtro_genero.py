@@ -1,7 +1,8 @@
 from django.contrib.auth.models import User
 from django.test import LiveServerTestCase
 from selenium import webdriver
-from selenium.webdriver.edge.service import Service
+from selenium.webdriver.chrome.service import Service
+from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
@@ -29,11 +30,11 @@ class BookFilterE2ETest(LiveServerTestCase):
         self.user = User.objects.create_user(
             username="testuser",
             email="testuser@example.com",
-            password="12345"
+            password="nciuw78432rjidscn923r"
         )
 
-        service = Service(r"C:\Users\jotaa\Downloads\edgedriver_win64\msedgedriver.exe")
-        self.browser = webdriver.Edge(service=service)
+        service = Service(ChromeDriverManager().install())
+        self.browser = webdriver.Chrome(service=service)
         self.browser.maximize_window()
         self.wait = WebDriverWait(self.browser, 15)
 
@@ -43,7 +44,7 @@ class BookFilterE2ETest(LiveServerTestCase):
     def test_filter_books_by_genre(self):
         self.browser.get(f"{self.live_server_url}/users/login/")
         self.wait.until(EC.presence_of_element_located((By.NAME, "username"))).send_keys(self.user.username)
-        self.browser.find_element(By.NAME, "password").send_keys("12345")
+        self.browser.find_element(By.NAME, "password").send_keys("nciuw78432rjidscn923r")
         self.browser.find_element(By.XPATH, "//button[contains(text(),'Entrar')]").click()
 
         self.wait.until(EC.url_contains("/library/"))

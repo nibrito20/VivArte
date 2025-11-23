@@ -3,8 +3,9 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-from selenium.webdriver.edge.service import Service
-from selenium.webdriver.edge.options import Options
+from selenium.webdriver.chrome.service import Service
+from webdriver_manager.chrome import ChromeDriverManager
+from selenium.webdriver.chrome.options import Options
 from django.contrib.auth.models import User
 from django.test import LiveServerTestCase
 from django.urls import reverse
@@ -15,8 +16,8 @@ class UserFlowE2ETest(LiveServerTestCase):
         options = Options()
         options.add_argument("start-maximized")
         
-        service = Service(r"C:\Users\jotaa\Downloads\edgedriver_win64\msedgedriver.exe")
-        self.browser = webdriver.Edge(service=service, options=options)
+        service = Service(ChromeDriverManager().install())
+        self.browser = webdriver.Chrome(service=service, options=options)
         
         self.user = User.objects.create_user(username='joaopfdias', password='SAOaloGGO123', email='joaopfdias@example.com')
 
