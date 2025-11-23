@@ -33,6 +33,7 @@ class Book(models.Model):
     creationdate = models.DateTimeField(auto_now_add=True)
     slug = models.SlugField()
     banner = models.ImageField(default='fallack.png', blank=True)
+    author = models.CharField(max_length=100, blank=True, null=True)
     #stars = models.FloatField(,default=0) pra aparecer qual a media de estrelas do livro
 
     generos = models.ManyToManyField(Genre, blank=True)
