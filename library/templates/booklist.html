@@ -269,14 +269,17 @@
                         {{ book.title }}
                     </a>
                     
-                    <div style="color: #f8d64e; margin: 5px 0;">
-                        {% with rating=book.rating|default:0 %}
-                            {% if rating >= 1 %}★{% else %}☆{% endif %}
-                            {% if rating >= 2 %}★{% else %}☆{% endif %}
-                            {% if rating >= 3 %}★{% else %}☆{% endif %}
-                            {% if rating >= 4 %}★{% else %}☆{% endif %}
-                            {% if rating >= 5 %}★{% else %}☆{% endif %}
-                        {% endwith %}
+                    <div style="color: #f8d64e; margin: 5px 0; display: flex; align-items: center; gap: 5px;">
+                        {% if book.media_notas %}
+                            <span style="font-weight: bold; color: #333; font-size: 1.1rem;">
+                                {{ book.media_notas|floatformat:1 }}
+                            </span>
+                            
+                            <span style="font-size: 1.2rem;">★</span>
+                            
+                            {% else %}
+                            <span style="color: #999; font-size: 0.9rem;">Sem avaliações</span>
+                        {% endif %}
                     </div>
 
                     <div class="card-price">
