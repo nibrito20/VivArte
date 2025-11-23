@@ -5,7 +5,7 @@ from .models import Book, Genre, ReviewRating, RatingSearch
 class BookAdmin(admin.ModelAdmin):
     fieldsets = [
         ('Informações Principais', {
-            'fields': ['title', 'details', 'slug', 'banner', 'price']
+            'fields': ['title', 'author', 'details', 'slug', 'banner', 'price']
         }),
         ('Categorização e Avaliação', {
             'fields': ['generos', 'rating']
