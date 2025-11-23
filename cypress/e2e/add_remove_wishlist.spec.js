@@ -1,36 +1,28 @@
 describe('Add and remove wishlist', () => {
+  const username = 'wish_user'
+  const email = 'wish_user@example.com'
+  const password = 'TestPass123!'
+
   before(() => {
-    // ensure a user exists by registering via UI if necessary
-    cy.visit('/users/register/')
-    cy.get('input[name="username"]').then($el => {
-      if ($el.length) {
-        cy.get('input[name="username"]').clear().type('wish_user')
-        cy.get('input[name="email"]').clear().type('wish_user@example.com')
-        cy.get('input[name="password1"]').clear().type('TestPass123!')
-        cy.get('input[name="password2"]').clear().type('TestPass123!')
-        cy.get('form').submit()
-      }
-    })
+    cy.ensureUser(username, email, password)
   })
 
   it('adds and removes a book from wishlist', () => {
-    // login
-    cy.visit('/users/login/')
-    cy.get('input[name="username"]').clear().type('wish_user')
-    cy.get('input[name="password"]').clear().type('TestPass123!')
-    cy.get('form').submit()
+    cy.login(username, password)
 
-    // go to library page
-    cy.visit('/library/')
+    // go to book list
+    cy.visit('/')
 
-    // find a book card (assumes at least one book exists)
-    cy.get('body').contains('Adicionar').first().click()
+    // add first book to wishlist from its card
+    cy.get('.book-card').first().within(() => {
+      cy.contains('Adicionar aos Desejos').click()
+    })
 
-    // visit wishlist and remove
-    cy.visit('/library/lista-de-desejos/')
-    cy.get('body').contains('Remover').first().click()
+    // open wishlist page and remove the item
+    cy.visit('/lista-de-desejos/')
+    cy.contains('Remover').first().click()
 
-    // after removal, the removed button/text should not be visible
-    cy.get('body').contains('Remover').should('not.exist')
+    // after removal, the remove link should not exist
+    cy.contains('Remover').should('not.exist')
   })
 })

@@ -1,8 +1,15 @@
 describe('View book detail', () => {
-  it('navigates to a book detail page and checks the title', () => {
+  it('opens the first book detail and verifies the title', () => {
     cy.visit('/')
-    cy.contains('Biblioteca').click()
-    cy.contains('Harry Potter e a Pedra Filosofal').click()
-    cy.get('h1').should('contain.text', 'Harry Potter e a Pedra Filosofal')
+
+    // wait for the book list to render and grab the first book title
+    cy.get('.card-title', { timeout: 10000 }).first().then($el => {
+      const title = $el.text().trim()
+      // click the book link
+      cy.wrap($el).click()
+
+      // on the detail page the main h1 should contain the same title
+      cy.get('h1', { timeout: 10000 }).should('contain.text', title)
+    })
   })
 })

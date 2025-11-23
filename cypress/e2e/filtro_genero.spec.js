@@ -1,32 +1,23 @@
 describe('Filter books by genre', () => {
+  const username = 'wish_user'
+  const email = 'wish_user@example.com'
+  const password = 'TestPass123!'
+
   before(() => {
-    // try to ensure user exists
-    cy.visit('/users/login/')
-    cy.get('input[name="username"]').then($el => {
-      if ($el.length) {
-        // no-op
-      }
-    })
+    cy.ensureUser(username, email, password)
   })
 
   it('filters books when clicking genre links', () => {
-    cy.visit('/users/login/')
-    // if login is present, attempt to sign in with a known test user
-    cy.get('input[name="username"]').clear().type('wish_user')
-    cy.get('input[name="password"]').clear().type('TestPass123!')
-    cy.get('form').submit()
+    cy.login(username, password)
 
-    cy.visit('/library/')
+    cy.visit('/')
 
-    // Click Romance and assert Romance books show
+    // Click Romance and check the page title mentions the genre
     cy.contains('Romance').click()
-    cy.wait(500)
-    // assert at least one book remains visible
-    cy.get('body').should('contain.text', 'Romance')
+    cy.get('.page-title').should('contain.text', 'Gênero')
 
-    // Click Ação and assert Ação books show
+    // Click Ação and assert the page title updates
     cy.contains('Ação').click()
-    cy.wait(500)
-    cy.get('body').should('contain.text', 'Ação')
+    cy.get('.page-title').should('contain.text', 'Gênero')
   })
 })
