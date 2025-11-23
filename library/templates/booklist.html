@@ -193,7 +193,16 @@
 
 <div class="header-full">
     <h2 style="margin-top:0; margin-bottom: 15px;">Encontre sua próxima leitura</h2>
-    <input type="text" placeholder="Pesquisar por título, autor ou ISBN..." class="search-input">
+    
+    <form method="GET" action="{% url 'library:list' %}">
+        <input 
+            type="text" 
+            name="q" 
+            value="{{ request.GET.q|default_if_none:'' }}" 
+            placeholder="Pesquisar por título, autor ou ISBN..." 
+            class="search-input"
+        >
+    </form>
 </div>
 
 <div class="layout-grid">

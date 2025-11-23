@@ -203,7 +203,14 @@
 
         <div class="book-info">
             <h1 class="book-title">{{ book.title }}</h1>
+            {% if book.author %}
+                <h3 style="color: #666; margin-top: -5px; margin-bottom: 15px; font-weight: normal;">
+                    por {{ book.author }}
+                </h3>
+            {% endif %}
+            <div style="font-size: 0.9rem; color: #888; margin-bottom: 15px;">
                 Adicionado em: {{ book.creationdate|date:"d" }} de {{ book.creationdate|date:"F" }} de {{ book.creationdate|date:"Y" }}
+            </div>
             <div class="book-description">
                 {{ book.details|linebreaks }}
             </div>
