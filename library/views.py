@@ -3,6 +3,8 @@ from .models import Book, Wishlist, Genre, ReviewRating, RatingSearch, Carrinho
 from django.contrib.auth.decorators import login_required
 from .forms import reviewForm
 from .models import Book
+from django.db.models import Q
+from django.utils.text import slugify
 
 def booklist(request, genero_slug=None, rating_slug=None):
     genero_atual = None
@@ -19,6 +21,15 @@ def booklist(request, genero_slug=None, rating_slug=None):
         books = Book.objects.filter(rating__in=[aval_atual]).order_by('-creationdate')
     else:
         books = Book.objects.all().order_by('-creationdate')
+
+    query = request.GET.get('q')
+    if query:
+        books = books.filter(
+            Q(title__icontains=query) | 
+            Q(details__icontains=query) |
+            Q(slug__icontains=slugify(query)) |
+            Q(author__icontains=query)
+        )
 
     context = {
         'books': books,
