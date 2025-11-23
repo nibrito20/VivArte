@@ -93,3 +93,21 @@ Nesta entrega, damos continuidade à documentação em Par. Para mais detalhes, 
 #### Link da aplicação
 
 - 👉 [Clique aqui para acessar o link do deploy](https://livraria.pythonanywhere.com)
+
+## Entrega 4
+
+### Histórias do Usuário
+
+#### Quadro (sprint)
+
+![Captura de tela do quadro na entrega 4 no projeto VivArte no Jira](img/quadro4.png)
+
+#### Backlog
+
+![Captura de tela do backlog na entrega 4 no projeto VivArte no Jira](img/backlog4.png)
+
+#### Programação em Par
+
+Demos continuidade à documentação em Par. Para mais detalhes, consulte a documentação completa disponível no docs.
+
+- 👉 [Clique aqui para acessar o relatório completo](https://docs.google.com/document/d/1M8ozVoiFYHHC7XLW48OckMtKpWRVdXbWguwumzyfgT8/edit?usp=sharing)
