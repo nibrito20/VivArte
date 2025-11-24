@@ -84,6 +84,7 @@ Nesta entrega, damos continuidade à documentação em Par. Para mais detalhes, 
 ![Captura de tela do issues no github](img/captura_de_tela_issues.png)
 
 #### Screencast do processo build e deployment automatizado
+
 - 🎬 [Clique aqui para acessar o vídeo](https://youtu.be/8oSQuyiw9nA)
 
 #### Teste E2E
@@ -111,3 +112,19 @@ Nesta entrega, damos continuidade à documentação em Par. Para mais detalhes, 
 Demos continuidade à documentação em Par. Para mais detalhes, consulte a documentação completa disponível no docs.
 
 - 👉 [Clique aqui para acessar o relatório completo](https://docs.google.com/document/d/1M8ozVoiFYHHC7XLW48OckMtKpWRVdXbWguwumzyfgT8/edit?usp=sharing)
+
+#### Screencast do Deploy das Histórias Implementadas
+
+- 🎬 [Clique aqui para acessar o vídeo](https://youtu.be/ndQSeeeiGDk)
+
+#### Issue/bug tracker
+
+![Captura de tela do issues no github](img/issues4.png)
+
+#### Teste E2E com Cypress
+
+- 🎬 [Clique aqui para acessar o vídeo](https://youtu.be/h5lbOS5RPjg)
+
+#### Link da aplicação
+
+- 👉 [Clique aqui para acessar o link do deploy](https://livraria.pythonanywhere.com)
