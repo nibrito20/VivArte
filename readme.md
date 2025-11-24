@@ -1,6 +1,6 @@
 # VivArte
 
-![Badge de Status](https://img.shields.io/badge/Status-Em%20Desenvolvimento-yellow)
+![Badge de Status](https://img.shields.io/badge/Status-Desenvolvida-brightgreen)
 
 ## Sobre o Projeto
 
